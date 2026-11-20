@@ -48,12 +48,32 @@ class Pipeline(unittest.TestCase):
         n = list(db.execute("MATCH ()-[r:SIMILAR_TO]->() RETURN count(*) AS n"))[0]["n"]
         self.assertEqual(n, 1); db.close()
 
-    def test_demo_replay_and_duplicate_cap(self):
+    def _context(self):
+        for q in ("MATCH (a:Skill {name:'SQL'}),(b:Skill {name:'dbt'}) MERGE (a)-[:RELATED_TO]->(b)",
+                  "MATCH (u:User {id:'me'}),(j:Job {id:'j05'}) MERGE (u)-[:DISMISSED]->(j)",
+                  "MATCH (u:User {id:'me'}),(j:Job {id:'j01'}) MERGE (u)-[:LIKED]->(j)"):
+            self.db.execute(q)
+
+    def test_related_skill_changes_score(self):
+        before = score.fallback(facts.gather(self.db, "j01"))["score"]
+        self.db.execute("MATCH (a:Skill {name:'SQL'}),(b:Skill {name:'dbt'}) MERGE (a)-[:RELATED_TO]->(b)")
+        f = facts.gather(self.db, "j01")
+        self.assertEqual(f["related"], [{"skill": "dbt", "via": "SQL"}])
+        self.assertEqual(score.fallback(f)["score"], before + 5)
+
+    def test_replay_moves_exactly_the_expected_job(self):
         from jobradar_relate import demo
-        base = {x["f"]["job"]: x["score"] for x in demo.rank(self.db)}
-        self.assertLessEqual(base["j02"], 60)
-        self.db.execute("MATCH (u:User {id:'me'}),(j:Job {id:'j01'}) MERGE (u)-[:LIKED]->(j)")
-        self.assertIn("j01", demo.rank(self.db)[0]["f"]["job"] + "j01")
+        self._context(); self.db.close()
+        path = f"{self.tmp}/t.rl"
+        shutil.copy(path, f"{self.tmp}/c.rl")
+        db = relate.connect(f"{self.tmp}/c.rl"); base = {x["f"]["job"]: x["score"] for x in demo.rank(db)}; db.close()
+        after = {x["f"]["job"]: x["score"] for x in demo.replay(path, "j05", "LIKED")}
+        self.assertLessEqual(base["j02"], 60)                      # duplicate cap
+        changed = {j for j in base if base[j] != after[j]}
+        self.assertEqual(changed, {"j05", "j06"})                  # only the flipped job and its repost
+        self.assertEqual(after["j05"] - base["j05"], 35)           # dismissed(-25) -> liked(+10)
+        self.assertGreater(after["j06"], base["j06"])
+        self.db = relate.connect(path)
 
     def test_sqlite_adapter_roundtrip(self):
         p = f"{self.tmp}/s.sqlite"

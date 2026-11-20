@@ -35,7 +35,12 @@ The four queries (`jobradar_relate/facts.py`):
 curl -sSfL https://relatedb.ai/install.sh | bash   # optional: only needed for the CLI queries below
 make demo      # creates .venv (relate-db==1.2.0), ranks all 10 jobs from jobradar.rl, writes docs/demo.html
 ```
-`make demo` reads a temporary copy of `jobradar.rl` (the shipped file is never modified). It prints a ranking and writes `docs/demo.html` with, per job: the itemised score, the graph path (`User -LIKED-> j01 -SIMILAR_TO(0.7)-> j03`), and the SIMILAR_TO links. It also replays one feedback change in a temp copy: flip `j05` from DISMISSED to LIKED and `j06` moves 25 -> 50, because its evidence path changed. Duplicates are capped at 60 so a repost never outranks a new job.
+`make demo` reads a temporary copy of `jobradar.rl` (the shipped file is never modified). It prints a ranking and writes `docs/demo.html` with, per job: the itemised score, the graph path (`User -LIKED-> j01 -SIMILAR_TO(0.7)-> j03`), and the SIMILAR_TO links. It also replays one feedback change in a temp copy: flip `j05` from DISMISSED to LIKED: `j05` moves 25 -> 60 (my own verdict) and its repost `j06` moves 30 -> 55 (the evidence path through `j05` changed); no other job moves. Duplicates are capped at 60 so a repost never outranks a new job.
+
+## Evaluation
+`make eval` compares the graph scorer with a context-free baseline (skill overlap only) on 6 author-labelled synthetic pairs (`eval/pairs.json`, results in `eval/results.md`): graph 6/6, baseline 4/6 (1 loss, 2 ties). This is a small fixture-specific check that the graph signals (own verdicts, reposts, similar-job feedback, related skills) change rankings in the intended direction; it is not evidence of general ranking quality.
+
+Scoring uses six graph queries: required skills and overlap, `RELATED_TO` skills I lack but am adjacent to, similar liked/dismissed jobs at the same company, `SIMILAR_TO` duplicate status, my own verdict on the job, and the evidence path.
 
 ## Setup and run
 ```bash

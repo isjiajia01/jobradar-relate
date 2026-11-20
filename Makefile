@@ -1,6 +1,6 @@
 PY := PYTHONPATH=. .venv/bin/python
 PY_SYS ?= python3
-.PHONY: demo venv test import build score sqlite
+.PHONY: eval demo venv test import build score sqlite
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 test:
@@ -19,3 +19,5 @@ sqlite:  # synthetic SQLite -> JSON -> graph
 demo:  # one command, no API key; writes docs/demo.html
 	@test -d .venv || $(MAKE) venv
 	$(PY) -m jobradar_relate.demo jobradar.rl docs/demo.html
+eval:  # graph scorer vs context-free baseline on eval/pairs.json -> eval/results.md
+	$(PY) -m jobradar_relate.evaluate jobradar.rl eval/results.md

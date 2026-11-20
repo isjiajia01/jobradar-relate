@@ -8,14 +8,18 @@ def breakdown(f):
     """Deterministic score as itemised contributions (used by the keyless demo)."""
     n = len(f["required"]) or 1
     parts = [("base", 50), (f"skills {len(f['overlap'])}/{len(f['required'])} matched", 30 * len(f["overlap"]) // n),
+             (f"related skills x{len(f['related'])}", 5 * min(len(f["related"]), 2)),
              (f"liked similar x{len(f['liked_similar'])}", 10 * min(len(f["liked_similar"]), 2)),
              (f"dismissed similar x{len(f['dismissed_similar'])}", -15 * min(len(f["dismissed_similar"]), 2))]
+    if f["own"]: parts.append((f"you {f['own'].lower()} this job", 10 if f["own"] == "LIKED" else -25))
     if f["status"] == "likely_duplicate": parts.append(("likely duplicate of a seen job", -20))
     return [p for p in parts if p[1] or p[0] == "base"]
 
 def fallback(f):
     s = max(0, min(100, sum(v for _, v in breakdown(f))))
     why = f"{len(f['overlap'])} of {len(f['required'])} required skills match your profile"
+    if f["own"]: why += f", you already {f['own'].lower()} this exact job"
+    if f["related"]: why += f", {len(f['related'])} more are related to skills you have"
     if f["liked_similar"]: why += f", you liked {len(f['liked_similar'])} similar job(s) at {f['company']}"
     if f["dismissed_similar"]: why += f", you dismissed {len(f['dismissed_similar'])} similar job(s) there"
     if f["status"] == "likely_duplicate": why += ", and it looks like a duplicate of a job already seen"
@@ -24,7 +28,7 @@ def fallback(f):
 def llm(f):
     url, key, model = os.environ.get("LLM_URL"), os.environ.get("LLM_API_KEY"), os.environ.get("LLM_MODEL")
     if not (url and key and model): return None
-    facts = {k: f[k] for k in ("title", "company", "required", "overlap", "liked_similar", "dismissed_similar", "similar_links", "status")}
+    facts = {k: f[k] for k in ("title", "company", "required", "overlap", "related", "own", "liked_similar", "dismissed_similar", "similar_links", "status")}
     msg = ("Use ONLY these graph facts. Reply JSON {\"score\":0-100,\"explanation\":\"one sentence\"}. "
            "Do not state any reason that is not in the facts.\n" + json.dumps(facts))
     req = urllib.request.Request(url, json.dumps({"model": model, "temperature": 0,
