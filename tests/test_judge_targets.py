@@ -22,6 +22,12 @@ class JudgeTargets(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         return result.stderr
 
+    def test_demo_page_shows_unseen_queue_before_and_after(self):
+        self.run_make("demo")
+        page = (ROOT / "docs/demo.html").read_text()
+        self.assertIn("review queue (unseen jobs only)", page)
+        self.assertIn("j06 6→2", page)
+
     def test_real_eval_reports_both_scorers(self):
         output = self.run_make("real-eval")
         self.assertIn("graph scorer", output)
