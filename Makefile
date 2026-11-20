@@ -1,13 +1,14 @@
 PY := PYTHONPATH=. .venv/bin/python
 QUERY ?= engineer
 VERDICT ?= LIKED
+N ?= 500
 replay: JOB ?= j05
 why similar: JOB ?= j06
-export QUERY JOB VERDICT
-.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check
+export QUERY JOB VERDICT N
+.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check scale
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-test eval demo search replay why similar similar-check: | .venv/bin/python
+test eval demo search replay why similar similar-check scale: | .venv/bin/python
 .venv/bin/python:
 	$(MAKE) venv
 test:
@@ -29,13 +30,15 @@ eval:  # graph scorer vs context-free baseline on eval/pairs.json -> eval/result
 	$(PY) -m jobradar_relate.evaluate jobradar.rl eval/results.md
 search:
 	$(PY) -m jobradar_relate.discover -- "$$QUERY"
+scale:
+	@$(PY) -m jobradar_relate.scale -- "$$N"
 
 help:
 	@echo 'demo | search QUERY=engineer | eval | test'
 	@echo 'replay JOB=j05 VERDICT=LIKED  (LIKED, DISMISSED or SEEN)'
 	@echo 'why JOB=j06                   (score parts and evidence)'
 	@echo 'similar JOB=j06 | similar-check (temporary lexical vector index)'
-	@echo 'venv | import | build OUT=<new path> | score | sqlite'
+	@echo 'venv | import | build OUT=<new path> | score | sqlite | scale N=500'
 replay:
 	@$(PY) -m jobradar_relate.inspect_job replay -- "$$JOB" "$$VERDICT"
 why:

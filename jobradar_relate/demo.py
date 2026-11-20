@@ -24,11 +24,11 @@ def rank(db):
     return sorted((score_job(db, job) for job in ids), key=lambda x: (-x["score"], x["f"]["job"]))
 
 
-def replay(src, job, verdict):
+def replay(src, job, verdict, *, temp_dir=None):
     """Apply one feedback or exposure edit in an isolated copy and rank it."""
     if verdict not in VERDICTS:
         raise ValueError(f"invalid VERDICT {verdict!r} (choose {'|'.join(VERDICTS)})")
-    with tempfile.TemporaryDirectory() as tmp:
+    with tempfile.TemporaryDirectory(dir=temp_dir) as tmp:
         path = shutil.copyfile(src, Path(tmp) / "replay.rl")
         with closing(relate.connect(str(path))) as db:
             params = {"j": job}
