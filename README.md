@@ -38,15 +38,17 @@ MIT, see [LICENSE](LICENSE).
 # Prerequisites: Python 3.12+, make; Relate CLI optional (relatedb.ai)
 make demo    # installs the pinned Python client on first run
 make search QUERY=engineer
+make replay JOB=j05 VERDICT=LIKED
+make why JOB=j06
 make test
 make eval
 ```
 
-Open `docs/demo.html` locally for the ranked cards, score breakdowns and evidence paths. The keyless demo and evaluation read disposable copies of the committed `jobradar.rl`. No server or model download is needed. The score is a preference heuristic out of 100.
+Open `docs/demo.html` locally for the ranked cards, score breakdowns and evidence paths. The demo reads the committed `jobradar.rl` in read-only mode. Replay and evaluation work on disposable copies. No server or model download is needed. The score is a preference heuristic out of 100.
 
 **Search for “engineer”.** Relate's persisted `job_titles` full-text index retrieves up to 25 listings with a text relevance score. Five titles match, all tied on text relevance. Two are already seen. The three remaining candidates rank **ML Engineer (70), DevOps Engineer (65), Data Engineer (60)** by personal fit, with text relevance and job ID breaking ties. Search matches titles only. Try `make search QUERY=developer` to inspect another shortlist.
 
-Try the feedback replay at the end of the demo. Changing one verdict on `j05` from dismissed to liked raises its score from **45 to 80**. Its neighbor `j06` moves from **50 to 75** through the same-company similarity edge. The other eight scores stay fixed. The two listings share a publication date, so their publication order is unknown.
+`make why` prints one job’s score contributions and evidence paths. `make replay` prints before/after scores and paths for each job whose score changes. `LIKED` and `DISMISSED` replace the selected job’s feedback. `SEEN` records exposure while preserving feedback. The HTML demo shows the default replay. Changing one verdict on `j05` from dismissed to liked raises its score from **45 to 80**. Its neighbor `j06` moves from **50 to 75** through the same-company similarity edge. The other eight scores stay fixed. The two listings share a publication date, so their publication order is unknown.
 
 ## Inside the single-file graph
 
@@ -65,6 +67,28 @@ make sqlite                            # synthetic SQLite -> importer JSON
 `make build` imports `data/sample_jobs.json` and applies `graph/profile.cypher`. `make import` additively applies those fixtures to the root store. `graph/explain.cypher` illustrates the overlap and same-company feedback portion of the evidence. The Python client is pinned to `relate-db==1.2.0`. Install the matching CLI from [Relate](https://relatedb.ai).
 
 The individual scorer optionally calls an OpenAI-compatible endpoint if `LLM_URL`, `LLM_MODEL` and `LLM_API_KEY` are set. Its response passes a schema and token heuristic before use. That heuristic cannot establish factual faithfulness. The judge demo and evaluation always use deterministic scoring.
+
+## Optional read-only MCP recipe
+
+With the Relate v1.2.0 CLI on `PATH`, configure your MCP host to launch the absolute path to `scripts/mcp-readonly.sh` over stdio. From the repository root, its command is `relate serve --database jobradar.rl --mcp stdio --read-only`. The judge targets work without MCP.
+
+We called `get_schema` with `{}` and `read_cypher` directly over MCP stdio on a temporary copy of the shipped store. Verification covered the protocol and tools only. No particular agent client was tested. Pass each query below as the `statement` argument to `read_cypher`.
+
+**Which dismissed listing contributes to j06’s penalty?** The result is `j05`, `DISMISSED`, similarity `0.8`, at Havn Pay. That same-company feedback costs j06 15 points.
+
+```cypher
+MATCH (:User {id:'me'})-[v:DISMISSED]->(peer:Job)-[s:SIMILAR_TO]-(j:Job {id:'j06'})
+MATCH (peer)-[:AT]->(c:Company)<-[:AT]-(j)
+RETURN peer.id AS peer, type(v) AS verdict, s.score AS similarity, c.name AS company
+```
+
+**Which Jobindex listings has the profile seen?** The result is `j01`.
+
+```cypher
+CYPHER 25 MATCH (:User {id:'me'})-[:SEEN]->(j:Job)
+FILTER j.source = 'jobindex'
+RETURN j.id AS job ORDER BY job
+```
 
 ## Evaluation and limits
 

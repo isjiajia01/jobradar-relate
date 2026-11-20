@@ -2,26 +2,50 @@
 Works on a temporary COPY of the .rl file, so the shipped store is never modified.
 Usage: python -m jobradar_relate.demo [jobradar.rl] [out.html]"""
 import html, shutil, sys, tempfile, os
+from contextlib import closing
+from pathlib import Path
+
 import relate
 from .discover import discover
 from .facts import gather
 from .score import breakdown, fallback
 
+VERDICTS = ("LIKED", "DISMISSED", "SEEN")
+
+
+def score_job(db, job):
+    facts = gather(db, job)
+    result = fallback(facts)
+    return {"f": facts, "score": result["score"], "why": result["explanation"], "parts": breakdown(facts)}
+
+
 def rank(db):
-    ids = [r["id"] for r in db.execute("MATCH (j:Job) RETURN j.id AS id ORDER BY id LIMIT 500")]
-    out = []
-    for i in ids:
-        f = gather(db, i); r = fallback(f)
-        out.append({"f": f, "score": r["score"], "why": r["explanation"], "parts": breakdown(f)})
-    return sorted(out, key=lambda x: (-x["score"], x["f"]["job"]))
+    ids = [r["id"] for r in db.execute("MATCH (j:Job) RETURN j.id AS id ORDER BY id")]
+    return sorted((score_job(db, job) for job in ids), key=lambda x: (-x["score"], x["f"]["job"]))
+
 
 def replay(src, job, verdict):
-    """Flip my verdict on `job` in a temp copy; return the new ranking."""
-    d = tempfile.mkdtemp(); p = os.path.join(d, "r.rl"); shutil.copy(src, p)
-    db = relate.connect(p)
-    db.execute("MATCH (:User {id:'me'})-[r:LIKED|DISMISSED]->(:Job {id:$j}) DELETE r", {"j": job})
-    db.execute(f"MATCH (u:User {{id:'me'}}),(j:Job {{id:$j}}) MERGE (u)-[:{verdict}]->(j)", {"j": job})
-    res = rank(db); db.close(); shutil.rmtree(d); return res
+    """Apply one feedback or exposure edit in an isolated copy and rank it."""
+    if verdict not in VERDICTS:
+        raise ValueError(f"invalid VERDICT {verdict!r} (choose {'|'.join(VERDICTS)})")
+    with tempfile.TemporaryDirectory() as tmp:
+        path = shutil.copyfile(src, Path(tmp) / "replay.rl")
+        with closing(relate.connect(str(path))) as db:
+            params = {"j": job}
+            if not list(db.execute("MATCH (j:Job {id:$j}) RETURN j.id", params)):
+                raise KeyError(job)
+            if verdict != "SEEN":
+                db.execute("MATCH (:User {id:'me'})-[r:LIKED|DISMISSED]->(:Job {id:$j}) DELETE r", params)
+            db.execute(f"MATCH (u:User {{id:'me'}}),(j:Job {{id:$j}}) MERGE (u)-[:{verdict}]->(j)", params)
+            return rank(db)
+
+
+def score_changes(base, after):
+    before = {row["f"]["job"]: row for row in base}
+    for row in after:
+        old = before[row["f"]["job"]]
+        if row["score"] != old["score"]:
+            yield old, row
 
 def card(x, delta=None):
     f, e = x["f"], html.escape
@@ -35,13 +59,10 @@ def card(x, delta=None):
             f"<b>SIMILAR_TO links</b><ul>{dup}</ul></div></div><code>{e(f['path'])}</code></div>")
 
 def main(db_path="jobradar.rl", out="docs/demo.html", job="j05", verdict="LIKED"):
-    d = tempfile.mkdtemp(); p = os.path.join(d, "c.rl"); shutil.copy(db_path, p)
-    db = relate.connect(p); base = rank(db)
-    hits, shortlist = discover(db, "engineer")
-    db.close(); shutil.rmtree(d)
-    after = replay(db_path, job, verdict)
-    before = {x["f"]["job"]: x["score"] for x in base}
-    moved = [(x, x["score"] - before[x["f"]["job"]]) for x in after if x["score"] != before[x["f"]["job"]]]
+    with closing(relate.connect(db_path, read_only=True)) as db:
+        base = rank(db)
+        hits, shortlist = discover(db, "engineer")
+    moved = [(new, new["score"] - old["score"]) for old, new in score_changes(base, replay(db_path, job, verdict))]
     search_rows = "".join(
         f"<tr><td>{html.escape(row['facts']['job'])} {html.escape(row['facts']['title'])}</td>"
         f"<td>{row['relevance']:.3f}</td><td>{row['score']}</td><td>{html.escape(row['facts']['status'])}</td></tr>"
@@ -50,11 +71,11 @@ def main(db_path="jobradar.rl", out="docs/demo.html", job="j05", verdict="LIKED"
             ".card{border:1px solid #ccc;border-radius:8px;padding:.8em 1em;margin:.8em 0}.score{float:right;background:#0a5;color:#fff;border-radius:6px;padding:0 .5em}"
             ".cols{display:flex;gap:2em}table{border-collapse:collapse;width:100%}td,th{text-align:left;border-bottom:1px solid #ccd6d3;padding:.4em}th{background:#e3ede6}@media(max-width:600px){.cols{display:block}td,th{padding:.2em}h3{font-size:1rem}}.hop{color:#06c}.dup{color:#c60}.delta{color:#a0a;font-size:.8em}code{display:block;font-size:12px;color:#555;margin-top:.5em}</style>"
             "<h1>Which opening is worth a closer look?</h1><p>Synthetic data. Deterministic scorer, no API key. Source: "
-            f"<code>{html.escape(db_path)}</code> (read as a temporary copy).</p><h2>Search for “engineer”</h2>"
+            f"<code>{html.escape(db_path)}</code> (opened read-only).</p><h2>Search for “engineer”</h2>"
             f"<p>Relate found {hits} title matches. {len(shortlist)} are unseen. Personal fit orders those listings using graph evidence.</p>"
             "<table><thead><tr><th>Unseen listing</th><th>Text score</th><th>Fit</th><th>Status</th></tr></thead>"
             f"<tbody>{search_rows}</tbody></table><p><a href='#feedback'>Jump to the feedback replay</a></p><h2>All listings</h2>" + "".join(card(x) for x in base)
-            + f"<h2 id='feedback'>Feedback replay: what if I {verdict} {job}?</h2><p>Only the {verdict} edge changes in a temporary copy.</p>"
+            + f"<h2 id='feedback'>Feedback replay: what if I {verdict} {job}?</h2><p>The feedback replay runs on a temporary copy.</p>"
             + ("".join(card(x, dlt) for x, dlt in moved) or "<p>No scores changed.</p>"))
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True); open(out, "w").write(page)
     for x in base: print(f"{x['score']:>3}  {x['f']['job']}  {x['f']['title']} @ {x['f']['company']}  [{x['f']['status']}]")
