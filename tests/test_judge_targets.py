@@ -14,7 +14,7 @@ STORE = ROOT / "jobradar.rl"
 class JudgeTargets(unittest.TestCase):
     def run_make(self, *args, success=True):
         before = hashlib.sha256(STORE.read_bytes()).digest()
-        result = subprocess.run(["make", *args], cwd=ROOT, capture_output=True, text=True)
+        result = subprocess.run(["make", "--no-print-directory", *args], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(hashlib.sha256(STORE.read_bytes()).digest(), before)
         if success:
             self.assertEqual(result.returncode, 0, result.stderr)
