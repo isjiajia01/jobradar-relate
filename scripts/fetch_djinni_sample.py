@@ -21,11 +21,11 @@ def main(out, seed=7, exclude=None):
     rng = random.Random(seed)
     offsets = range(0, 141800, 100)
     original = set(random.Random(7).sample(offsets, 8)) if exclude else set()
-    initial = sorted(set(rng.sample(offsets, 8)) - original)
-    remaining = sorted(set(offsets) - original - set(initial))
-    rng.shuffle(remaining)
-    jobs = []
-    for off in initial + remaining:
+    # Amendment 1 (holdout only): the dataset is sorted by title, so 8 chunks give a one-stack sample.
+    # Holdout draws 40 chunks, pools all eligible rows and shuffles before taking 50 unique companies.
+    pool = sorted(set(rng.sample([o for o in offsets if o not in original], 40 if exclude else 8)))
+    eligible = []
+    for off in pool:
         with urllib.request.urlopen(URL % off, timeout=60) as response:
             rows = json.load(response)["rows"]
         for row in rows:
@@ -33,18 +33,25 @@ def main(out, seed=7, exclude=None):
             sk = skills(r["Position"] + " " + r["Long Description"])
             if r["Primary Keyword"] not in TECH or len(sk) < 2 or r["Long Description_lang"] != "en":
                 continue
-            company = company_key(r["Company Name"]) if exclude else r["Company Name"]
-            url = "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#" + r["id"]
-            if company in seen or url in urls:
-                continue
-            seen.add(company)
-            urls.add(url)
-            prefix = "h" if exclude else "d"
-            jobs.append({"id": f"{prefix}{len(jobs)+1:02d}", "title": r["Position"][:80], "company": r["Company Name"], "location": "Remote",
-                         "source": "djinni", "posted_date": r["Published"][:10], "skills": sk, "url": url})
-            if len(jobs) == 50:
-                out.write_text(json.dumps(jobs, indent=1))
-                return
+            eligible.append((r, sk))
+        if not exclude and len(eligible) >= 400:
+            break
+    if exclude:
+        rng.shuffle(eligible)
+    jobs = []
+    for r, sk in eligible:
+        company = company_key(r["Company Name"]) if exclude else r["Company Name"]
+        url = "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#" + r["id"]
+        if company in seen or url in urls:
+            continue
+        seen.add(company)
+        urls.add(url)
+        prefix = "h" if exclude else "d"
+        jobs.append({"id": f"{prefix}{len(jobs)+1:02d}", "title": r["Position"][:80], "company": r["Company Name"], "location": "Remote",
+                     "source": "djinni", "posted_date": r["Published"][:10], "skills": sk, "url": url})
+        if len(jobs) == 50:
+            out.write_text(json.dumps(jobs, indent=1))
+            return
     raise ValueError("fewer than 50 eligible postings")
 
 
