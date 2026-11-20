@@ -5,10 +5,10 @@ N ?= 500
 replay: JOB ?= j05
 why similar: JOB ?= j06
 export QUERY JOB VERDICT N
-.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check scale real real-eval real-why
+.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check scale real real-eval real-holdout-eval real-why
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-test eval demo search replay why similar similar-check scale real real-eval real-why: | .venv/bin/python
+test eval demo search replay why similar similar-check scale real real-eval real-holdout-eval real-why: | .venv/bin/python
 .venv/bin/python:
 	$(MAKE) venv
 test:
@@ -38,6 +38,8 @@ real-why:  # which skills of one real posting are held / adjacent / missing; JOB
 
 real-eval:  # scorer vs AI-annotated labels on the 50 real postings
 	$(PY) -m jobradar_relate.real_eval
+real-holdout-eval:
+	$(PY) -m jobradar_relate.holdout_eval
 scale:
 	@$(PY) -m jobradar_relate.scale -- "$$N"
 

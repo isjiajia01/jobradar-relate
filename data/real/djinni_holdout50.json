@@ -1,0 +1,801 @@
+[
+ {
+  "id": "h01",
+  "title": "BackEnd .Net Developer",
+  "company": "Creatio",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-07-01",
+  "skills": [
+   "TypeScript",
+   "C#",
+   ".NET",
+   "SQL",
+   "PostgreSQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#8c1933ba-115d-575d-ba9a-9cf875b7170c"
+ },
+ {
+  "id": "h02",
+  "title": "Back End (.NET) Developer",
+  "company": "Field Complete",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-07-01",
+  "skills": [
+   ".NET",
+   "SQL",
+   "Docker"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#e8d1c06a-e320-5e26-ab41-87b8217e280a"
+ },
+ {
+  "id": "h03",
+  "title": "Back-End .NET Developer",
+  "company": "Easygenerator",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "skills": [
+   ".NET",
+   "SQL",
+   "MongoDB",
+   "Redis",
+   "Docker",
+   "Kubernetes",
+   "AWS",
+   "Node.js",
+   "Linux",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#2f9b1b21-5f2c-5d31-acdd-b7df635795dd"
+ },
+ {
+  "id": "h04",
+  "title": "Back-End .NET Developer",
+  "company": "Valtech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-05-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "AWS",
+   "Azure"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#74e05a4a-bd27-547f-aa79-0ecd172bb4b0"
+ },
+ {
+  "id": "h05",
+  "title": "Back-End .NET Developer",
+  "company": "SYTOSS",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-10-01",
+  "skills": [
+   ".NET",
+   "SQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#9cd2fc87-5b24-5b91-a716-759e6bed5bbc"
+ },
+ {
+  "id": "h06",
+  "title": "Back-End .NET Developer",
+  "company": "ScrumLaunch",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "skills": [
+   ".NET",
+   "Docker",
+   "Kubernetes",
+   "Azure"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#9c81deed-eb07-5247-b7cc-3d56d7c21fb1"
+ },
+ {
+  "id": "h07",
+  "title": "BackEnd .NET Developer",
+  "company": "HumanLab",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-04-01",
+  "skills": [
+   ".NET",
+   "SQL",
+   "Redis",
+   "Azure",
+   "React"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#627ef523-0a71-58c4-83c4-bfeb35b33e27"
+ },
+ {
+  "id": "h08",
+  "title": "Backend NET Developer (CC)",
+  "company": "O2IT",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-02-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#b3ca0edb-474d-5a50-9611-96ed0531b517"
+ },
+ {
+  "id": "h09",
+  "title": "Back end .Net developer (only Israel, On-site)",
+  "company": "YozmaTech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-09-01",
+  "skills": [
+   "Python",
+   ".NET",
+   "GCP",
+   "React",
+   "Git",
+   "REST",
+   "GraphQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#dc889e2a-ae6d-5d75-b7cb-f345194821c0"
+ },
+ {
+  "id": "h10",
+  "title": "Backend .NET Developer (Poland)",
+  "company": "Efisco",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-06-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL",
+   "Azure",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#2fa32065-df0b-5b9c-931d-bd9aa5fdb373"
+ },
+ {
+  "id": "h11",
+  "title": "Back-End .NET Developer (Suits)",
+  "company": "Genesis ( Suits)",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-06-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL",
+   "Docker",
+   "AWS",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ec9c8781-6ab5-5b5e-aea4-c2bd2626394b"
+ },
+ {
+  "id": "h12",
+  "title": "Back-end .Net Engineer",
+  "company": "Techstack Ltd",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-12-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL",
+   "Azure"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#b891bf46-d015-54a8-8b59-2858f1c802e8"
+ },
+ {
+  "id": "h13",
+  "title": "BackEnd .Net Engineer",
+  "company": "MindHunt",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-05-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL",
+   "Azure",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#329d0989-f693-5523-ba1d-120f92062cd8"
+ },
+ {
+  "id": "h14",
+  "title": "Backend .NET Engineer (Middle+ OR Senior)",
+  "company": "TalentsToday",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-06-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "Azure",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#7e25a350-90dd-5a92-ba49-b4ba95158201"
+ },
+ {
+  "id": "h15",
+  "title": "BackEnd (.Net) Software Developer",
+  "company": "UAtalents",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-05-01",
+  "skills": [
+   ".NET",
+   "SQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#8a987ca2-289d-56d2-b4db-ade654dd069b"
+ },
+ {
+  "id": "h16",
+  "title": "Backend (.NET) Team Lead",
+  "company": "Itera",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-10-01",
+  "skills": [
+   "C#",
+   ".NET",
+   "SQL",
+   "Azure",
+   "Git"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#392fa416-abd8-56ba-9032-6949be6c4242"
+ },
+ {
+  "id": "h17",
+  "title": "DevOps Engineer",
+  "company": "RemSoft.Dev",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-09-01",
+  "skills": [
+   "TypeScript",
+   ".NET",
+   "Azure",
+   "Linux"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#94dd953c-b024-5c0c-8cb7-d8aacbcbde27"
+ },
+ {
+  "id": "h18",
+  "title": "DevOps Engineer",
+  "company": "Beetroot",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-08-01",
+  "skills": [
+   "Python",
+   "JavaScript",
+   "MySQL",
+   "Docker",
+   "Linux",
+   "Machine Learning"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6476c2cb-542b-5db1-af16-d7cb74222621"
+ },
+ {
+  "id": "h19",
+  "title": "DevOps Engineer",
+  "company": "Neo Bank",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-11-01",
+  "skills": [
+   "Kubernetes",
+   "AWS",
+   "Terraform"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6826c310-e080-5f27-a444-413d521160b2"
+ },
+ {
+  "id": "h20",
+  "title": "Middle Java Developer",
+  "company": "eKreative",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-04-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "PostgreSQL",
+   "Docker",
+   "Kubernetes",
+   "AWS",
+   "GCP",
+   "Spring",
+   "Linux",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#02d0e431-5150-5ce0-9aed-b6d5bcdc7feb"
+ },
+ {
+  "id": "h21",
+  "title": "Middle Java Developer",
+  "company": "Softjourn",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-03-01",
+  "skills": [
+   "Java",
+   "JavaScript",
+   "Spring",
+   "Git",
+   "Linux"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#d4515326-63cb-5473-a67b-56529205fde7"
+ },
+ {
+  "id": "h22",
+  "title": "Middle Java Developer",
+  "company": "Hygge Software",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-12-01",
+  "skills": [
+   "Python",
+   "Java",
+   "SQL",
+   "MongoDB",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#0ca3a84b-c21d-5410-9448-9a323ad9f634"
+ },
+ {
+  "id": "h23",
+  "title": "Middle Java Developer",
+  "company": "Brightgrove",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "Docker",
+   "Kubernetes",
+   "AWS",
+   "Terraform",
+   "Spring",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#793be09c-94f6-5f3d-bd1c-95786b8f6eba"
+ },
+ {
+  "id": "h24",
+  "title": "Middle Java Developer",
+  "company": "Simplify",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-07-01",
+  "skills": [
+   "Java",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#77ddb8fd-afe4-5301-a704-8623aea7376d"
+ },
+ {
+  "id": "h25",
+  "title": "Middle Java Developer",
+  "company": "ITCode",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-12-01",
+  "skills": [
+   "Java",
+   "JavaScript",
+   "Spring",
+   "Git"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#50393fb8-0161-599c-b408-8c948496d2cc"
+ },
+ {
+  "id": "h26",
+  "title": "Middle Java Developer",
+  "company": "JetSoftPro",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-05-01",
+  "skills": [
+   "Java",
+   "Docker",
+   "Kubernetes",
+   "Spring",
+   "Git"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#1f225f17-bc9e-5a10-8a7e-7450807b073a"
+ },
+ {
+  "id": "h27",
+  "title": "Middle Java Developer",
+  "company": "Gamingec",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-08-01",
+  "skills": [
+   "Java",
+   "JavaScript",
+   "AWS",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#36c9e66d-ca85-573d-8187-393aa50f89e5"
+ },
+ {
+  "id": "h28",
+  "title": "Middle Java Developer",
+  "company": "Genome",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-08-01",
+  "skills": [
+   "Java",
+   "MySQL",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#f1c50f5e-9957-5416-9dad-d2c3c0266152"
+ },
+ {
+  "id": "h29",
+  "title": "Middle Java Developer",
+  "company": "VITech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-03-01",
+  "skills": [
+   "Java",
+   "Spring",
+   "Linux"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#81c9748c-1ea2-5918-945a-527eefd2b00c"
+ },
+ {
+  "id": "h30",
+  "title": "Middle Java Developer",
+  "company": "Edvantis Software",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-06-01",
+  "skills": [
+   "Java",
+   "PostgreSQL",
+   "MySQL",
+   "Docker",
+   "AWS",
+   "React",
+   "Spring",
+   "REST",
+   "GraphQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#a456ce48-5946-5499-a26a-b59eaf5dd915"
+ },
+ {
+  "id": "h31",
+  "title": "Middle Java Developer",
+  "company": "Swipex",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-12-01",
+  "skills": [
+   "Java",
+   "PostgreSQL",
+   "Kafka",
+   "Spring",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#abe02e2d-f4f5-5f33-a6db-b1acaea4b804"
+ },
+ {
+  "id": "h32",
+  "title": "Middle Java Developer",
+  "company": "opinov8",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "PostgreSQL",
+   "MongoDB",
+   "Redis",
+   "Docker",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#7862abd3-3c33-58e4-adf8-49912b643378"
+ },
+ {
+  "id": "h33",
+  "title": "Middle Java Developer",
+  "company": "Binariks",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-09-01",
+  "skills": [
+   "Java",
+   "MySQL",
+   "Docker",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#197de75f-9c42-5dbb-bca6-1cedcda944cd"
+ },
+ {
+  "id": "h34",
+  "title": "Middle Java Developer",
+  "company": "BrainBerry Group",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-12-01",
+  "skills": [
+   "Java",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#56a9f7c5-e078-5669-b86a-d3b2b97b7f20"
+ },
+ {
+  "id": "h35",
+  "title": "Middle Java Developer",
+  "company": "Argus Soft",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-02-01",
+  "skills": [
+   "Java",
+   "PostgreSQL",
+   "Kafka",
+   "Spring",
+   "Git"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#244a82eb-f483-540d-a69e-383730dad502"
+ },
+ {
+  "id": "h36",
+  "title": "Middle Java Developer",
+  "company": "IntellectEU",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "skills": [
+   "Java",
+   "MySQL",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#e1c14520-dd67-503c-9b91-99888b65728f"
+ },
+ {
+  "id": "h37",
+  "title": "Middle Java Developer",
+  "company": "mVise AG",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-03-01",
+  "skills": [
+   "Java",
+   "C++",
+   "SQL",
+   "Docker",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#27e8f4e2-175f-5527-a027-763dcb300319"
+ },
+ {
+  "id": "h38",
+  "title": "Middle Java Developer",
+  "company": "Nixwood",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-04-01",
+  "skills": [
+   "Java",
+   "JavaScript",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#f8564909-3292-5841-89ed-4be418d25b2a"
+ },
+ {
+  "id": "h39",
+  "title": "Middle Java Developer",
+  "company": "More than",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-05-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "Redis",
+   "Kubernetes",
+   "AWS",
+   "Spring",
+   "REST",
+   "GraphQL"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#bf786132-6921-5d93-8837-a8e087f74537"
+ },
+ {
+  "id": "h40",
+  "title": "Middle Java Developer",
+  "company": "Intelvision",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-11-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "Docker",
+   "AWS",
+   "Azure",
+   "Spring",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#96fd4389-aa05-57e7-87b9-78fb80d0610c"
+ },
+ {
+  "id": "h41",
+  "title": "Middle Java Developer",
+  "company": "TalentsHunter",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-12-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "Docker",
+   "Spring",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6a3a7da7-b86b-54fa-a733-bbde6a770a4d"
+ },
+ {
+  "id": "h42",
+  "title": "Middle Java Developer",
+  "company": "deventor.io",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-08-01",
+  "skills": [
+   "Java",
+   "Spring",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#af13577a-3087-5081-8bd5-e6301e4f585f"
+ },
+ {
+  "id": "h43",
+  "title": "Middle Java Developer",
+  "company": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430 \u041a\u0430\u0434\u0440\u043e\u0432\u0430 \u0413\u0440\u0443\u043f\u0430",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-10-01",
+  "skills": [
+   "Java",
+   "AWS",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#d1918c8d-80bb-5ee1-a5eb-c846ab383a7e"
+ },
+ {
+  "id": "h44",
+  "title": "Middle Java Developer",
+  "company": "Devcom",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-04-01",
+  "skills": [
+   "Java",
+   "MySQL",
+   "Spring"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#14faaa17-a787-56dd-b1c1-95020a638c2f"
+ },
+ {
+  "id": "h45",
+  "title": "Middle Java Developer",
+  "company": "DNA325",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "skills": [
+   "Java",
+   "SQL",
+   "Docker",
+   "AWS",
+   "Azure",
+   "Spring",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#11071cf2-5ee3-52ed-8841-1a1a606795a1"
+ },
+ {
+  "id": "h46",
+  "title": "Middle Java Developer",
+  "company": "EGT Ukraine",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-07-01",
+  "skills": [
+   "Java",
+   "MySQL",
+   "Redis",
+   "Kafka",
+   "Docker",
+   "Kubernetes",
+   "Spring",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#8c3a958f-d1ae-5617-bdbd-5ca0f2a158bb"
+ },
+ {
+  "id": "h47",
+  "title": "Middle Java Developer",
+  "company": "ARTKAI",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-03-01",
+  "skills": [
+   "Java",
+   "Scala"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#2f5b3437-eb82-53b9-9ffc-da633af8eba8"
+ },
+ {
+  "id": "h48",
+  "title": "Middle Java Developer",
+  "company": "ProfITsoft",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-05-01",
+  "skills": [
+   "Java",
+   "JavaScript",
+   "SQL",
+   "Kafka",
+   "React",
+   "Spring",
+   "Git",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ebd643f8-f586-5eae-b3fc-ca9280520e7d"
+ },
+ {
+  "id": "h49",
+  "title": "Middle Java Developer",
+  "company": "TechScout.tech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-07-01",
+  "skills": [
+   "Java",
+   "PostgreSQL",
+   "MySQL",
+   "Spring",
+   "REST"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#7f341113-15ca-5cab-b956-86edbfc92aaa"
+ },
+ {
+  "id": "h50",
+  "title": "Middle Java Developer",
+  "company": "AgileEngine",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-06-01",
+  "skills": [
+   "Java",
+   "Scala",
+   "C++",
+   "PostgreSQL",
+   "Redis"
+  ],
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#f5255ac5-b7a5-50bb-b0bd-7d7e0367f1cf"
+ }
+]

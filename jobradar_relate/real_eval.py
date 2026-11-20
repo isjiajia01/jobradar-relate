@@ -7,7 +7,8 @@ from contextlib import closing
 from itertools import combinations
 from pathlib import Path
 import relate
-from .demo import rank
+from .facts import gather
+from .score import fallback
 from .importer import import_jobs, norm, similarity
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,9 +30,9 @@ def main():
         subprocess.run(["relate", "query", "--database", path], input=(ROOT / "graph/profile_real.cypher").read_text(),
                        text=True, check=True, capture_output=True)
         with closing(relate.connect(path, read_only=True)) as db:
-            ranked = rank(db)
-    graph = {x["f"]["job"]: x["score"] for x in ranked}
-    overlap = {x["f"]["job"]: len(x["f"]["overlap"]) for x in ranked}   # baseline: count of matched skills only
+            facts = [gather(db, job["id"]) for job in jobs]
+    graph = {f["job"]: fallback(f, legacy=True)["score"] for f in facts}
+    overlap = {f["job"]: len(f["overlap"]) for f in facts}   # baseline: count of matched skills only
     ids = {k: [i for i in label if label[i] == k] for k in ("LIKED", "NEUTRAL", "DISMISSED")}
     print("AI labels (fictional candidate): " + ", ".join(f"{k} {len(v)}" for k, v in ids.items()))
     for name, s in (("graph scorer", graph), ("skill-count baseline", overlap)):

@@ -62,7 +62,9 @@ The other eight scores do not move. **Zero-install view:** [jobradar.isjia.page]
 
 `make real-why JOB=d02` shows, for one real listing, which required skills the (invented) profile has exactly, which are only adjacent through a `RELATED_TO` edge we wrote (e.g. Kubernetes via Docker), and which are not covered. Adjacent is not a claim of qualification.
 
-### Check against AI-annotated labels (`make real-eval`)
+`make real` uses the preference-aware scorer. The frozen held-out protocol compares it with the original scorer and skill count on 50 additional, company-disjoint listings. Stage B supplies fresh AI labels before `make real-holdout-eval` can report results. [Held-out protocol](docs/preregistration.md)
+
+### Historical check against AI-annotated labels (`make real-eval`, original scorer)
 
 A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for a **fictional** candidate (Python, SQL, Docker, Spark), from title, company and skill keywords only (`data/real/ai_labels.json`). These are **AI labels, not a real person's feedback**, and the annotator also judged mainly by skill fit, so this is not independent validation. Result: LIKED 11, NEUTRAL 20, DISMISSED 19.
 
@@ -71,7 +73,7 @@ A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for 
 | Our scorer (no feedback or similar edges here) | 0.81 | 4 / 11 |
 | Plain count of matched skills | 0.92 | 4 / 11 |
 
-Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company on two boards, and this catalog is a single source, so it creates no links; that is **0 of 2** overlap with the annotator's broader similar-role pairs, not a measured duplicate-recall result. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
+Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. These exposed labels are excluded from scorer selection. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company on two boards, and this catalog is a single source, so it creates no links; that is **0 of 2** overlap with the annotator's broader similar-role pairs, not a measured duplicate-recall result. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
 
 ## Optional read-only MCP recipe
 

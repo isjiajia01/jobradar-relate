@@ -4,19 +4,35 @@ import json, os, re, sys, urllib.request
 import relate
 from .facts import gather
 
-def breakdown(f):
+def breakdown(f, *, legacy=False):
     """Deterministic score as itemised contributions (used by the keyless demo)."""
-    n = len(f["required"]) or 1
-    parts = [("base", 50), (f"skills {len(f['overlap'])}/{len(f['required'])} matched", 30 * len(f["overlap"]) // n),
+    required, matched = len(f["required"]), len(f["overlap"])
+    if not legacy and f.get("skill_basis") == "count":
+        skill_part = (f"exact skills matched x{matched}", 10 * matched)
+    else:
+        skill_part = (f"skills {matched}/{required} matched", 30 * matched // (required or 1))
+    parts = [("base", 50), skill_part,
              (f"related skills x{len(f['related'])}", 5 * min(len(f["related"]), 2)),
              (f"liked similar x{len(f['liked_similar'])}", 10 * min(len(f["liked_similar"]), 2)),
              (f"dismissed similar x{len(f['dismissed_similar'])}", -15 * min(len(f["dismissed_similar"]), 2))]
+    if not legacy:
+        avoided = title_match(f["title"], f.get("avoided", []))
+        if avoided and "Python" not in f["required"]:
+            parts.append((f"avoided language in title ({avoided}) without Python", -5))
     if f["own"]: parts.append((f"you {f['own'].lower()} this job", 10 if f["own"] == "LIKED" else -25))
     if f["status"] == "likely_duplicate": parts.append(("likely duplicate of a seen job", -20))
+    exclusion = None if legacy else title_match(f["title"], f.get("excluded_titles") or [])
+    if exclusion:
+        parts.append((f"excluded role in title ({exclusion})", -sum(value for _, value in parts)))
     return [p for p in parts if p[1] or p[0] == "base"]
 
-def fallback(f):
-    s = max(0, min(100, sum(v for _, v in breakdown(f))))
+def title_match(title, terms):
+    return next((term for term in terms if re.search(r"\b" + re.escape(term) + r"\b", title, re.I)), None)
+
+
+def fallback(f, *, legacy=False):
+    parts = breakdown(f, legacy=legacy)
+    s = max(0, min(100, sum(v for _, v in parts)))
     if f["status"] == "likely_duplicate":
         s = min(s, 60)
     why = f"{len(f['overlap'])} of {len(f['required'])} required skills match your profile"
@@ -25,6 +41,9 @@ def fallback(f):
     if f["liked_similar"]: why += f", you liked {len(f['liked_similar'])} similar job(s) at {f['company']}"
     if f["dismissed_similar"]: why += f", you dismissed {len(f['dismissed_similar'])} similar job(s) there"
     if f["status"] == "likely_duplicate": why += ", and it looks like a duplicate of a job already seen"
+    for reason, _ in parts:
+        if reason.startswith(("avoided language", "excluded role")):
+            why += f", {reason}"
     return {"score": s, "explanation": why + "."}
 
 def llm(f):

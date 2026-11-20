@@ -1,7 +1,8 @@
 """Graph fact queries run BEFORE LLM scoring. Read-only; values bound as parameters."""
 Q1 = """MATCH (j:Job {id:$id})-[:REQUIRES]->(s:Skill)
 OPTIONAL MATCH (:User {id:$user})-[h:HAS_SKILL]->(s)
-RETURN s.name AS skill, h IS NOT NULL AS have ORDER BY skill LIMIT 50"""
+OPTIONAL MATCH (:User {id:$user})-[a:AVOIDS]->(s)
+RETURN s.name AS skill, a IS NOT NULL AS avoided, h IS NOT NULL AS have ORDER BY skill LIMIT 50"""
 # Q2: only jobs at the SAME company that are SIMILAR_TO this job, and my verdict on them.
 Q2 = """MATCH (j:Job {id:$id})-[:SIMILAR_TO]-(o:Job)-[:AT]->(:Company)<-[:AT]-(j)
 OPTIONAL MATCH (:User {id:$user})-[f:LIKED|DISMISSED]->(o)
@@ -11,7 +12,8 @@ OPTIONAL MATCH (:User {id:$user})-[v:SEEN]->(d)
 RETURN d.id AS id, d.source AS source, d.posted_date AS posted_date,
        v IS NOT NULL AS seen, r.score AS score ORDER BY score DESC, id"""
 Q4 = """MATCH (j:Job {id:$id})-[:AT]->(c:Company) OPTIONAL MATCH (:User {id:$user})-[v:SEEN]->(j)
-RETURN j.title AS title, j.source AS source, j.posted_date AS posted_date,
+OPTIONAL MATCH (u:User {id:$user})
+RETURN u.skill_basis AS skill_basis, u.excluded_titles AS excluded_titles, j.title AS title, j.source AS source, j.posted_date AS posted_date,
        v IS NOT NULL AS seen, c.name AS company LIMIT 1"""
 # Q5: required skills I lack but that are RELATED_TO a skill I have (either direction)
 Q5 = """MATCH (j:Job {id:$id})-[:REQUIRES]->(s:Skill)
@@ -62,5 +64,5 @@ def gather(db, job_id, user="me"):
             f"{'related: ' + ', '.join(r['skill'] + ' ~ ' + r['via'] for r in related) + '; ' if related else ''}"
             f"User -LIKED-> {len(liked)} / -DISMISSED-> {len(dismissed)} similar jobs at same company; "
             f"-SIMILAR_TO-> {', '.join(l['id'] + ' (' + l['source'] + ', ' + str(l['score']) + ')' for l in links) or 'none'} => {status}")
-    return {"job": job_id, **h, "required": required, "overlap": overlap, "related": related, "own": own, "liked_similar": liked,
+    return {"job": job_id, **h, "required": required, "overlap": overlap, "related": related, "avoided": [s["skill"] for s in skills if s["avoided"]], "own": own, "liked_similar": liked,
             "dismissed_similar": dismissed, "similar_links": links, "status": status, "path": path, "hops": hops}
