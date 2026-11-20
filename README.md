@@ -60,7 +60,7 @@ The other eight scores do not move. **Zero-install view:** [jobradar.isjia.page]
 
 With the Relate v1.2.0 CLI on `PATH`, configure your MCP host to launch the absolute path to `scripts/mcp-readonly.sh` over stdio. From the repository root, its command is `relate serve --database jobradar.rl --mcp stdio --read-only`. The judge targets work without MCP.
 
-We called `get_schema` with `{}` and `read_cypher` directly over MCP stdio on a temporary copy of the shipped store. Verification covered the protocol and tools only. No particular agent client was tested. Pass each query below as the `statement` argument to `read_cypher`.
+We called `get_schema` with `{}` and `read_cypher` directly over MCP stdio on a temporary copy of the shipped store. Verification covered the protocol and tools only. We also ran one session with Claude Code (2026-11-20, `claude -p` with a `--mcp-config` pointing at the script): the agent called `get_schema` and then `read_cypher` twice, and correctly reported that j06's only `SIMILAR_TO` neighbour is j05 and the user's LIKED/DISMISSED edges. One session, read-only; the store's checksum was unchanged afterwards. Other hosts were not tested. Pass each query below as the `statement` argument to `read_cypher`.
 
 **Which dismissed listing contributes to j06’s penalty?** The result is `j05`, `DISMISSED`, similarity `0.8`, at Havn Pay. That same-company feedback costs j06 15 points.
 
