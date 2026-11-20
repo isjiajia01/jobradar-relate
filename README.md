@@ -1,5 +1,7 @@
 # Jobradar · connected job memory
 
+[![CI](https://github.com/isjiajia01/jobradar-relate/actions/workflows/ci.yml/badge.svg)](https://github.com/isjiajia01/jobradar-relate/actions/workflows/ci.yml)
+
 Explainable job recommendations, remembered in a single-file Relate graph.
 
 Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile has seen and liked `j01`, which was published before `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
@@ -31,6 +33,8 @@ make replay JOB=j05 VERDICT=LIKED  # flip a verdict on a temp copy, see what mov
 make why JOB=j06                   # itemised score and evidence path, read-only
 make search QUERY=engineer         # Relate full-text SEARCH, then rank by fit
 make test && make eval
+make similar JOB=j06               # optional: toy lexical vector search plus graph evidence
+make scale N=500                   # optional: synthetic scale timings
 ```
 
 Real output (the committed `jobradar.rl` is never modified):
@@ -50,7 +54,7 @@ j06 score 50
   -15 dismissed similar x1
 ```
 
-The other eight scores do not move. `docs/demo.html` shows ranked cards with score breakdowns and the default replay. More targets: `make help`. Graph and scoring details, plus the optional LLM scorer: [docs/design.md](docs/design.md).
+The other eight scores do not move. `docs/demo.html` shows ranked cards with score breakdowns and the default replay. `make similar` uses a toy hashed bag-of-words vector index, not a semantic model ([docs/vector.md](docs/vector.md)). `make scale` times a seeded synthetic graph and is no real-world evidence ([docs/scale.md](docs/scale.md)). More targets: `make help`. Graph and scoring details, plus the optional LLM scorer: [docs/design.md](docs/design.md).
 
 ## Optional read-only MCP recipe
 
