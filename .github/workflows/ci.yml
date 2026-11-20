@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install Relate CLI v1.2.0
+        shell: bash
+        run: |
+          cd "$RUNNER_TEMP"
+          curl --fail --silent --show-error --location --retry 3 \
+            --output relate-linux-amd64 \
+            https://github.com/relatedb/relate/releases/download/v1.2.0/relate-linux-amd64
+          echo '03e05e7cf25eec498e328837a3b6636c7a4807410b989e4b72948f1ebc8a99a5  relate-linux-amd64' | sha256sum --check
+          install -Dm755 relate-linux-amd64 bin/relate
+          bin/relate --version | grep -Fx 'Relate v1.2.0'
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - run: make test
+      - run: make demo
+      - run: make eval
