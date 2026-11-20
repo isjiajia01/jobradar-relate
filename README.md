@@ -21,7 +21,7 @@ Try the feedback replay at the end of the demo. Changing one verdict on `j05` fr
 
 ## Inside the single-file graph
 
-`Job` nodes link to `Company`, `Skill` and `Location`. A synthetic `User` has skills, has seen listings and can like or dismiss them. `RELATED_TO` connects adjacent skills. `SIMILAR_TO` connects cross-board listings at the same company using title and skill overlap, plus one curated weaker link. The edge's stored direction follows job ID only.
+`Job` nodes link to `Company`, `Skill` and `Location`. A synthetic `User` has skills, has seen listings and can like or dismiss them. `RELATED_TO` connects adjacent skills. `SIMILAR_TO` connects cross-board listings at the same company using title and skill overlap, plus one curated weaker link. A matching location and at least two identical required skills (the entire set) can support a renamed title when publication dates are within seven days. Conflicting location strings cap similarity at 0.7. The edge's stored direction follows job ID only.
 
 The scorer reads required skills, exact matches, adjacent skills, own verdicts and same-company neighbor verdicts. A likely repost requires a personally seen, strictly earlier ISO-dated listing on another board with similarity at least 0.8. Reposts lose 20 points and are capped at 60. Similarity alone carries no repost penalty. SEEN records exposure, independent of feedback. The ranking includes seen jobs so judges can inspect the propagation.
 
@@ -41,4 +41,6 @@ The individual scorer optionally calls an OpenAI-compatible endpoint if `LLM_URL
 
 On six author-labelled comparisons, the graph scores **6/6** and skill overlap alone scores **4/6**, counting ties as half. The labels mirror the scorer's signals, making this a regression check. Ten synthetic jobs cannot establish real-world ranking quality. Similarity can miss renamed roles and confuse genuinely separate openings with identical titles. Inspect every pair and both scores in [the generated evaluation](eval/results.md).
 
-A second benchmark uses **six separate two-board feeds**. Its reference labels come from synthetic requisition IDs withheld from the importer. The fixed detector identified **4/6** correctly (two true positives, two true negatives). It missed a renamed opening and incorrectly flagged identical roles on different teams. These deliberately challenging cases measure duplicate identity separately from ranking. The [case definitions](eval/requisitions.json) include the withheld identifiers for audit.
+Repost identity improved from **4/6 to 5/6** on the original synthetic two-board feeds. Only the grader sees the synthetic requisition IDs. The revised rule catches the renamed opening. The verbatim repost and the separate-team openings have identical public fields in both pairs, so the latter still triggers a false positive. [Original cases](eval/requisitions.json)
+
+On five synthetic cases authored after the rule was frozen, both versions scored **3/5**. The revised rule catches a renamed accessibility role and distinguishes branch teams listing different cities. It misses a single opening listed in two cities and flags two unrelated functions that share common tools. These results measure behavior on constructed examples. [Held-out cases](eval/requisitions_holdout.json) · [Predictions](eval/results.md)

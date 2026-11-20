@@ -11,21 +11,21 @@ from .facts import gather
 def baseline(f):
     return 50 + 30 * len(f["overlap"]) // (len(f["required"]) or 1)
 
-def requisition_report():
-    cases = json.loads(Path("eval/requisitions.json").read_text())["cases"]
+def requisition_table(cases):
     counts = {label: 0 for label in ("TP", "TN", "FP", "FN")}
-    rows = []
+    rows = ["| case | withheld requisitions | prediction | outcome |", "|---|---|---|---|"]
     for case in cases:
         first, later = case["first"], case["later"]
-        jobs = []
-        for i, (_, title, skills) in enumerate((first, later), start=1):
-            jobs.append({"id": f"p{i}", "title": title, "skills": skills,
-                         "company": "Example Studio", "location": "Example City",
-                         "posted_date": f"2026-10-0{i}", "source": f"board{i}",
-                         "url": f"https://example.invalid/p{i}"})
+        locations = case.get("locations", ["Example City", "Example City"])
+        dates = case.get("dates", ["2026-10-01", "2026-10-02"])
         db = relate.connect(":memory:")
         try:
-            import_jobs(db, jobs)
+            for i, ((_, title, skills), location, posted) in enumerate(
+                    zip((first, later), locations, dates, strict=True), start=1):
+                import_jobs(db, [{"id": f"p{i}", "title": title, "skills": skills,
+                                  "company": "Example Studio", "location": location,
+                                  "posted_date": posted, "source": f"board{i}",
+                                  "url": f"https://example.invalid/p{i}"}])
             db.execute("MATCH (p:Job {id:'p1'}) MERGE (u:User {id:'me'}) MERGE (u)-[:SEEN]->(p)")
             status = gather(db, "p2")["status"]
         finally:
@@ -35,14 +35,22 @@ def requisition_report():
         label = ("T" if expected == predicted else "F") + ("P" if predicted else "N")
         counts[label] += 1
         rows.append(f"| {case['case']} | {first[0]} / {later[0]} | {status} | {label} |")
-    return ("\n## Repost detection on a separate synthetic feed\n\n"
-            "A pair counts as one opening when its synthetic requisition IDs agree. "
-            "The importer never receives those IDs. Each pair has its own store, an earlier seen listing "
-            "and a later unseen candidate. These stress cases were added after the similarity rule was fixed.\n\n"
-            "| case | withheld requisitions | prediction | outcome |\n|---|---|---|---|\n"
-            + "\n".join(rows) + f"\n\nCorrect: **{counts['TP'] + counts['TN']}/{len(cases)}**. "
-            + ", ".join(f"{key}: {value}" for key, value in counts.items())
-            + ". This evaluates duplicate identity only. Case frequencies are constructed.\n")
+    return ("\n".join(rows) + f"\n\nCorrect: **{counts['TP'] + counts['TN']}/{len(cases)}**. "
+            + ", ".join(f"{key}: {value}" for key, value in counts.items()) + ".\n")
+
+
+def requisition_report():
+    original = json.loads(Path("eval/requisitions.json").read_text())["cases"]
+    held_out = json.loads(Path("eval/requisitions_holdout.json").read_text())["cases"]
+    return ("\n## Repost detection on separate synthetic feeds\n\n"
+            "Each pair has its own store. The importer receives two batches of public listing fields. "
+            "Only the grader compares the withheld requisitions. A positive prediction is `likely_duplicate`. "
+            "Case frequencies are constructed.\n\n"
+            "### Original cases\n\nThe previous rule scored 4/6 (TP 2, TN 2, FP 1, FN 1).\n\n"
+            + requisition_table(original) + "\nThe verbatim repost and separate-team case have identical "
+            "observable inputs, so any deterministic classifier must miss at least one.\n\n"
+            "### Held-out cases\n\nThese synthetic cases were authored after the revised rule was frozen "
+            "in `e173fd3`. The previous rule scored 3/5 (TP 1, TN 2, FP 1, FN 1). They were scored without further tuning.\n\n" + requisition_table(held_out))
 
 def main(db_path="jobradar.rl", out="eval/results.md"):
     pairs = json.load(open("eval/pairs.json"))["pairs"]

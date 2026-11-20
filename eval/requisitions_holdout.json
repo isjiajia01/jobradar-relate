@@ -1,0 +1,10 @@
+{
+  "description": "Post-freeze synthetic feeds. Locations and dates are public board fields in first/later order. Equal requisitions grade a repost.",
+  "cases": [
+    {"case":"renamed accessibility opening", "first":["H21","Accessibility Tester",["WCAG","VoiceOver","NVDA"]], "later":["H21","Inclusive QA Specialist",["NVDA","WCAG","VoiceOver"]]},
+    {"case":"separate branch teams hiring identical roles", "locations":["Example North","Example South"], "first":["H22","Branch Auditor",["Reporting","Compliance"]], "later":["H23","Branch Auditor",["Reporting","Compliance"]]},
+    {"case":"one multi-site opening advertised by city", "locations":["Example North","Example South"], "first":["H24","Service Planner",["Scheduling","Forecasting"]], "later":["H24","Service Planner",["Scheduling","Forecasting"]]},
+    {"case":"different functions share common tools", "first":["H25","Buyer",["Excel","SQL"]], "later":["H26","Payroll Analyst",["Excel","SQL"]]},
+    {"case":"later hiring cycle with shared tools", "dates":["2026-02-10","2026-10-01"], "first":["H27","Test Automation Lead",["Python","Git"]], "later":["H28","Release Coordinator",["Python","Git"]]}
+  ]
+}

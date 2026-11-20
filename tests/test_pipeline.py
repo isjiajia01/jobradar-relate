@@ -63,6 +63,26 @@ class Pipeline(unittest.TestCase):
         n = list(db.execute("MATCH ()-[r:SIMILAR_TO]->() RETURN count(*) AS n"))[0]["n"]
         self.assertEqual(n, 1); db.close()
 
+    def test_rename_requires_recent_matching_skills_and_location(self):
+        first = dict(self.jobs[0], posted_date="2026-10-31")
+        later = dict(first, title="Reporting Specialist", posted_date="2026-11-07")
+        self.assertEqual(importer.similarity(first, later), 0.8)
+        for change in ({"posted_date": "2026-11-08"}, {"posted_date": "unknown"},
+                       {"skills": ["SQL"]}, {"location": ""}, {"location": "Elsewhere"}):
+            with self.subTest(change=change):
+                self.assertLess(importer.similarity(first, dict(later, **change)), 0.8)
+
+    def test_cross_batch_conflicting_locations_keep_only_similarity(self):
+        first = dict(self.jobs[0], id="branch-a", company="Example Branches")
+        later = dict(first, id="branch-b", source="other", location="Example South",
+                     posted_date="2026-11-12")
+        importer.import_jobs(self.db, [first])
+        self.db.execute("MATCH (u:User {id:'me'}),(j:Job {id:'branch-a'}) MERGE (u)-[:SEEN]->(j)")
+        importer.import_jobs(self.db, [later])
+        result = facts.gather(self.db, "branch-b")
+        self.assertEqual(result["status"], "similar_seen")
+        self.assertEqual(result["similar_links"][0]["score"], 0.7)
+
     def _context(self):
         for q in ("MATCH (u:User {id:'me'}) UNWIND ['j01','j05'] AS id MATCH (j:Job {id:id}) MERGE (u)-[:SEEN]->(j)",
                   "MATCH (a:Skill {name:'SQL'}),(b:Skill {name:'dbt'}) MERGE (a)-[:RELATED_TO]->(b)",

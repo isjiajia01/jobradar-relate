@@ -13,17 +13,37 @@ Graph scorer: **6.0/6**. Context-free baseline (skill overlap only): **4.0/6**.
 
 Caveats: 6 pairs on a 10-job fixture, labelled by the author; this shows the graph signals change rankings in the intended direction, not general ranking quality. The labels follow the same signals the graph scorer uses (dismissals, reposts, related skills), so a graph win is expected by construction; the value is showing a skill-only baseline cannot see them. Controls (first two rows) are expected to be easy for both.
 
-## Repost detection on a separate synthetic feed
+## Repost detection on separate synthetic feeds
 
-A pair counts as one opening when its synthetic requisition IDs agree. The importer never receives those IDs. Each pair has its own store, an earlier seen listing and a later unseen candidate. These stress cases were added after the similarity rule was fixed.
+Each pair has its own store. The importer receives two batches of public listing fields. Only the grader compares the withheld requisitions. A positive prediction is `likely_duplicate`. Case frequencies are constructed.
+
+### Original cases
+
+The previous rule scored 4/6 (TP 2, TN 2, FP 1, FN 1).
 
 | case | withheld requisitions | prediction | outcome |
 |---|---|---|---|
 | verbatim syndication | R11 / R11 | likely_duplicate | TP |
 | minor skill edit | R12 / R12 | likely_duplicate | TP |
-| board rewrites the title | R13 / R13 | new | FN |
+| board rewrites the title | R13 / R13 | likely_duplicate | TP |
 | two teams advertise identical roles | R14 / R15 | likely_duplicate | FP |
 | same employer, distinct tracks | R16 / R17 | new | TN |
 | shared discipline, distinct openings | R18 / R19 | new | TN |
 
-Correct: **4/6**. TP: 2, TN: 2, FP: 1, FN: 1. This evaluates duplicate identity only. Case frequencies are constructed.
+Correct: **5/6**. TP: 3, TN: 2, FP: 1, FN: 0.
+
+The verbatim repost and separate-team case have identical observable inputs, so any deterministic classifier must miss at least one.
+
+### Held-out cases
+
+These synthetic cases were authored after the revised rule was frozen in `e173fd3`. The previous rule scored 3/5 (TP 1, TN 2, FP 1, FN 1). They were scored without further tuning.
+
+| case | withheld requisitions | prediction | outcome |
+|---|---|---|---|
+| renamed accessibility opening | H21 / H21 | likely_duplicate | TP |
+| separate branch teams hiring identical roles | H22 / H23 | similar_seen | TN |
+| one multi-site opening advertised by city | H24 / H24 | similar_seen | FN |
+| different functions share common tools | H25 / H26 | likely_duplicate | FP |
+| later hiring cycle with shared tools | H27 / H28 | new | TN |
+
+Correct: **3/5**. TP: 1, TN: 2, FP: 1, FN: 1.
