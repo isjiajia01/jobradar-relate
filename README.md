@@ -40,11 +40,13 @@ relate query --database ./jobradar.rl --read-only --mode envelope \
   'MATCH (n) RETURN labels(n)[0] AS l, count(*) AS n ORDER BY l'
 
 # import jobs (idempotent MERGE, never deletes) and add SIMILAR_TO edges
-PYTHONPATH=. .venv/bin/python -m jobradar_relate.importer data/sample_jobs.json jobradar.rl
+make import        # = PYTHONPATH=. .venv/bin/python -m jobradar_relate.importer data/sample_jobs.json jobradar.rl
 
 # score with graph facts + explanation path
-PYTHONPATH=. .venv/bin/python -m jobradar_relate.score jobradar.rl j02 j06 j09
+make score         # j02 j06 j09
+make test          # unit tests (temp store, never touches jobradar.rl)
 ```
+SQLite: `jobradar_relate/sqlite_adapter.py` reads a `jobs` table (synthetic schema built by `data/make_sample_sqlite.py`) into importer JSON; `make sqlite` demos it.
 The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL`, `LLM_API_KEY`, `LLM_MODEL` (OpenAI-compatible, temperature 0); it receives only the graph facts. The output field `scorer` says which one ran. (The LLM path is untested so far.)
 
 `graph/seed.cypher` rebuilds the 10-job example graph from scratch; `graph/explain.cypher` is a single-query version of the explanation path.
@@ -54,5 +56,5 @@ The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL
 
 ## Limits
 - SIMILAR_TO is a simple heuristic (same company, different source, title + skill overlap); cross-company duplicates are not detected.
-- Only a JSON importer is included; no SQLite adapter yet.
+- The SQLite adapter targets a synthetic schema, not the real Jobradar database.
 - Job Ops, a separate earlier project of mine, is not part of this.
