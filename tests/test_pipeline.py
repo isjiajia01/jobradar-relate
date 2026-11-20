@@ -48,6 +48,13 @@ class Pipeline(unittest.TestCase):
         n = list(db.execute("MATCH ()-[r:SIMILAR_TO]->() RETURN count(*) AS n"))[0]["n"]
         self.assertEqual(n, 1); db.close()
 
+    def test_demo_replay_and_duplicate_cap(self):
+        from jobradar_relate import demo
+        base = {x["f"]["job"]: x["score"] for x in demo.rank(self.db)}
+        self.assertLessEqual(base["j02"], 60)
+        self.db.execute("MATCH (u:User {id:'me'}),(j:Job {id:'j01'}) MERGE (u)-[:LIKED]->(j)")
+        self.assertIn("j01", demo.rank(self.db)[0]["f"]["job"] + "j01")
+
     def test_sqlite_adapter_roundtrip(self):
         p = f"{self.tmp}/s.sqlite"
         subprocess.check_call([sys.executable, str(ROOT / "data/make_sample_sqlite.py"), p])

@@ -27,9 +27,13 @@ def gather(db, job_id, user="me"):
     dup = [l for l in links if l["score"] >= DUP_SCORE and l["source"] != head[0]["source"]]
     status = "likely_duplicate" if dup else ("similar_seen" if links else "new")
     h = head[0]
+    wt = {l["id"]: l["score"] for l in links}
+    hops = [{"verdict": r["verdict"], "via": r["id"], "weight": wt.get(r["id"]),
+             "text": f"User -{r['verdict']}-> {r['id']} -SIMILAR_TO({wt.get(r['id'])})-> {job_id} (same company: {h['company']})"}
+            for r in sim if r["verdict"]]
     path = (f"{h['title']}@{h['company']} -REQUIRES-> {', '.join(required) or 'none'}; "
             f"User -HAS_SKILL-> {', '.join(overlap) or 'none'}; "
             f"User -LIKED-> {len(liked)} / -DISMISSED-> {len(dismissed)} similar jobs at same company; "
             f"-SIMILAR_TO-> {', '.join(l['id'] + ' (' + l['source'] + ', ' + str(l['score']) + ')' for l in links) or 'none'} => {status}")
     return {"job": job_id, **h, "required": required, "overlap": overlap, "liked_similar": liked,
-            "dismissed_similar": dismissed, "similar_links": links, "status": status, "path": path}
+            "dismissed_similar": dismissed, "similar_links": links, "status": status, "path": path, "hops": hops}

@@ -4,11 +4,17 @@ import json, os, re, sys, urllib.request
 import relate
 from .facts import gather
 
-def fallback(f):
+def breakdown(f):
+    """Deterministic score as itemised contributions (used by the keyless demo)."""
     n = len(f["required"]) or 1
-    s = 50 + 30 * len(f["overlap"]) // n + 10 * min(len(f["liked_similar"]), 2) - 15 * min(len(f["dismissed_similar"]), 2)
-    if f["status"] == "likely_duplicate": s -= 20
-    s = max(0, min(100, s))
+    parts = [("base", 50), (f"skills {len(f['overlap'])}/{len(f['required'])} matched", 30 * len(f["overlap"]) // n),
+             (f"liked similar x{len(f['liked_similar'])}", 10 * min(len(f["liked_similar"]), 2)),
+             (f"dismissed similar x{len(f['dismissed_similar'])}", -15 * min(len(f["dismissed_similar"]), 2))]
+    if f["status"] == "likely_duplicate": parts.append(("likely duplicate of a seen job", -20))
+    return [p for p in parts if p[1] or p[0] == "base"]
+
+def fallback(f):
+    s = max(0, min(100, sum(v for _, v in breakdown(f))))
     why = f"{len(f['overlap'])} of {len(f['required'])} required skills match your profile"
     if f["liked_similar"]: why += f", you liked {len(f['liked_similar'])} similar job(s) at {f['company']}"
     if f["dismissed_similar"]: why += f", you dismissed {len(f['dismissed_similar'])} similar job(s) there"
@@ -51,6 +57,7 @@ def recommend(db, job_id):
     except Exception as e: print("llm failed, using fallback:", e, file=sys.stderr); r = None
     used = "llm" if r is not None else "fallback"
     r = r or fallback(f)
+    if f["status"] == "likely_duplicate": r["score"] = min(r["score"], 60)   # duplicates never outrank new jobs
     return {"job": job_id, "title": f["title"], "status": f["status"], **r, "path": f["path"], "scorer": used}
 
 if __name__ == "__main__":

@@ -30,6 +30,13 @@ The four queries (`jobradar_relate/facts.py`):
 3. `SIMILAR_TO` links to jobs already seen: `likely_duplicate` (score >= 0.8, different source), `similar_seen`, or `new`.
 4. One explanation path, e.g. `Data Engineer@Nordlys Analytics -REQUIRES-> Airflow, Python, SQL; User -HAS_SKILL-> Python, SQL; User -LIKED-> 1 similar job at same company; -SIMILAR_TO-> j01 (jobindex, 0.8) => likely_duplicate`.
 
+## Judge quick start (no API key)
+```bash
+curl -sSfL https://relatedb.ai/install.sh | bash   # optional: only needed for the CLI queries below
+make demo      # creates .venv (relate-db==1.2.0), ranks all 10 jobs from jobradar.rl, writes docs/demo.html
+```
+`make demo` reads a temporary copy of `jobradar.rl` (the shipped file is never modified). It prints a ranking and writes `docs/demo.html` with, per job: the itemised score, the graph path (`User -LIKED-> j01 -SIMILAR_TO(0.7)-> j03`), and the SIMILAR_TO links. It also replays one feedback change in a temp copy: flip `j05` from DISMISSED to LIKED and `j06` moves 25 -> 50, because its evidence path changed. Duplicates are capped at 60 so a repost never outranks a new job.
+
 ## Setup and run
 ```bash
 curl -sSfL https://relatedb.ai/install.sh | bash     # Relate CLI (tested with v1.2.0)
