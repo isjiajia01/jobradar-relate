@@ -40,12 +40,13 @@ def main():
         hit = sum(label[i] == "LIKED" for i in top)
         print(f"{name:22} AUC LIKED>DISMISSED {a:.2f} · top-{len(top)} contains {hit}/{len(top)} LIKED")
     print("(random = AUC 0.50; ties count half; there are no SIMILAR_TO or feedback edges here, so the graph adds nothing beyond skills)")
-    rule = [(a["id"], b["id"]) for a, b in combinations(jobs, 2) if similarity(a, b) >= 0.6]
+    rule = [(a["id"], b["id"]) for a, b in combinations(jobs, 2)
+            if a["source"] != b["source"] and similarity(a, b) >= 0.6]   # same guard as importer.import_jobs
     ident = [(a["id"], b["id"]) for a, b in combinations(jobs, 2)
              if norm(a["title"]) == norm(b["title"]) and set(a["skills"]) == set(b["skills"])]
     clear = [tuple(p) for p in lab["similar_pairs_clear"]]
     print(f"clear similar pairs per annotator: {clear}")
-    print(f"importer rule (same company, different source) finds {len(rule)} pairs; recovers {sum(p in rule for p in clear)}/{len(clear)}")
+    print(f"importer rule (same company, different source, one source here) finds {len(rule)} pairs; recovers {sum(p in rule for p in clear)}/{len(clear)}")
     print(f"post-hoc check, same title + identical skill set: {ident} (defined after seeing the labels, not part of the importer)")
 
 if __name__ == "__main__":

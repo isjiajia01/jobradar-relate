@@ -6,7 +6,7 @@ Explainable job recommendations, remembered in a single-file Relate graph.
 
 Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile has seen and liked `j01`, which was published before `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
 
-This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for a personal job digest. All listings, profile choices and outcomes in this repository are synthetic.
+This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for a personal job digest. The shipped demo store (`jobradar.rl`) and all feedback are synthetic. Separately, `make real` and `make real-eval` use 50 historical public Djinni listings with a synthetic profile and AI labels (see below).
 
 ## Use case
 
@@ -25,7 +25,7 @@ I keep a personal daily LLM job digest (Jobindex, Jobnet, LinkedIn). It scores e
 
 ## Setup and run
 
-Prerequisites: Python 3.12+ and `make`. The Relate CLI v1.2.0 ([relatedb.ai](https://relatedb.ai)) is optional for the judge targets. No API key, server or model download.
+Prerequisites: Python 3.12+ and `make`. The Relate CLI v1.2.0 ([relatedb.ai](https://relatedb.ai)) is optional for the judge targets (required for the optional `make real` and `make real-eval`). No API key, server or model download.
 
 ```bash
 make demo                          # ranks 10 jobs, writes docs/demo.html
@@ -58,7 +58,7 @@ The other eight scores do not move. **Zero-install view:** [jobradar.isjia.page]
 
 ## Real job catalog (no similar-listing links)
 
-`make real` ranks 50 real public postings from the MIT-licensed Djinni dataset (see `DATA-NOTICES.md`) on a temporary graph. Only the **catalog** is real. The profile is still invented, and skills come from a 40-word keyword list we wrote, applied to truncated descriptions, so some are missed. The sample is skewed towards "Big Data" titles because of how the dataset is ordered. **This catalog has no `SIMILAR_TO` links:** Djinni is a single source and our similar-listing rule needs the same company on two boards. So repost detection and feedback replay are demonstrated only on the synthetic fixture. There is no duplicate label in Djinni either, so the evaluation is not run here.
+`make real` ranks 50 real public postings from the MIT-licensed Djinni dataset (see `DATA-NOTICES.md`) on a temporary graph. Only the **catalog** is real. The profile is still invented, and skills come from a 40-word keyword list we wrote, applied to truncated descriptions, so some are missed. The sample is skewed towards "Big Data" titles because of how the dataset is ordered. **This catalog has no `SIMILAR_TO` links:** Djinni is a single source and our similar-listing rule needs the same company on two boards. So repost detection and feedback replay are demonstrated only on the synthetic fixture. Djinni has no duplicate (requisition) label, so repost detection is not evaluated here; the check below only compares scores with AI preference labels.
 
 ### Check against AI-annotated labels (`make real-eval`)
 
@@ -69,7 +69,7 @@ A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for 
 | Our scorer (no feedback or similar edges here) | 0.81 | 4 / 11 |
 | Plain count of matched skills | 0.92 | 4 / 11 |
 
-Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company, so it recovers **0 of 2**. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
+Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company on two boards, and this catalog is a single source, so it creates no links; that is **0 of 2** overlap with the annotator's broader similar-role pairs, not a measured duplicate-recall result. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
 
 ## Optional read-only MCP recipe
 
@@ -100,7 +100,7 @@ Small and fixture-specific. On six author-labelled pairs the graph scorer gets *
 ## Origin, disclosure and AI use
 
 - **Started during the contest:** all code in this repository was first committed on 2026-11-20, after the contest began. No code was copied from my earlier private Jobradar project; only the idea (a daily job digest with LLM scoring) carries over. Jobradar is a personal tool, not an employer or production system.
-- **Data:** every job, company and profile choice is synthetic. No real feedback or other people's data is included.
+- **Data:** the shipped store, profile and feedback are synthetic. The optional `make real` catalog is 50 public MIT-licensed Djinni listings (`DATA-NOTICES.md`); its profile and labels are invented or AI-made. No real feedback or other people's data is included.
 - **AI tools:** the repository was written with AI coding agents under my direction, running in the Pi coding-agent harness. An agent wrote most of the code, tests, fixtures and docs; a separate review agent audited the design and led to fixes (unvalidated LLM output, inconsistent fixtures, a scoring gap, repost-detection changes). I chose the scope, approved each step and checked results. The optional LLM scoring path calls an OpenAI-compatible endpoint; the judge path uses no model.
 - **Third-party:** Relate v1.2.0 (Apache-2.0), `relate-db` 1.2.0, Python standard library (including SQLite).
 
