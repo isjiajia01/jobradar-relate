@@ -1,72 +1,39 @@
-# jobradar-relate
+# Jobradar · connected job memory
 
-Explainable job recommendations on a [Relate](https://relatedb.ai) graph.
-Entry for the *Relate by Neo4j Hackathon* (theme: Context, Connected).
+Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile liked `j01` and saw it before encountering `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
 
-This is a synthetic prototype inspired by Jobradar, a daily LLM job digest I built and run myself (Jobindex, Jobnet, LinkedIn -> filters -> LLM scoring -> email). This repo adds a **Relate memory layer** in front of the LLM scoring step. Everything here uses **synthetic example data only**; the original Jobradar repo is private and nothing from it is included. SQLite stays the store for dedup, status and history in Jobradar; Relate is the relationship memory.
+This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for a personal job digest. All listings, profile choices and outcomes in this repository are synthetic.
 
-## How I use Relate, and why
-Before the LLM scores a job, four graph queries collect facts about it. The LLM (or a deterministic fallback) sees only those facts and returns a score plus one sentence, together with the graph path used. LLM replies are validated: only `score` and `explanation` are kept, and any job id or number in the explanation must appear in the graph facts, otherwise the fallback runs. (This is a heuristic check, not a proof of faithfulness.)
+## Run the judge demo
 
-Problems this addresses:
-1. LLM scoring was a black box on one JD with no relationships.
-2. The same job appears on Jobindex / Jobnet / LinkedIn; SQLite dedup alone cannot show they are related. Relate stores `SIMILAR_TO` edges.
-3. No memory of what I liked or dismissed. Relate stores `LIKED` / `DISMISSED` edges.
-4. Recommendations could not explain themselves. Each result carries a path.
-
-## Mode: single file
-`./jobradar.rl` is one persistent Relate file, opened in-process (no server, no signup).
-
-**Why this mode:** one file per agent/user, easy to back up, submit and inspect. Judges can open the committed file directly (see below). Not `:memory:`, so the data survives and is inspectable.
-
-## What the graph models
-Nodes: `Job {id,title,url,source,posted_date}`, `Company {name}`, `Skill {name}`, `Location {name}`, `User {id}` (one synthetic profile, `me`).
-
-Edges: `(Job)-[:AT]->(Company)`, `(Company)-[:POSTED]->(Job)`, `(Job)-[:REQUIRES]->(Skill)`, `(Job)-[:IN]->(Location)`, `(Job)-[:SIMILAR_TO {score}]->(Job)`, `(User)-[:LIKED|DISMISSED]->(Job)`, `(Skill)-[:RELATED_TO]->(Skill)`, plus `(User)-[:HAS_SKILL]->(Skill)` (added to compute skill overlap).
-
-The four queries (`jobradar_relate/facts.py`):
-1. Required skills and overlap with my profile.
-2. Liked/dismissed jobs that are similar to this one at the same company.
-3. `SIMILAR_TO` links to jobs already seen: `likely_duplicate` (score >= 0.8, different source), `similar_seen`, or `new`.
-4. One explanation path, e.g. `Data Engineer@Nordlys Analytics -REQUIRES-> Airflow, Python, SQL; User -HAS_SKILL-> Python, SQL; User -LIKED-> 1 similar job at same company; -SIMILAR_TO-> j01 (jobindex, 0.8) => likely_duplicate`.
-
-## Judge quick start (no API key)
 ```bash
-curl -sSfL https://relatedb.ai/install.sh | bash   # optional: only needed for the CLI queries below
-make demo      # creates .venv (relate-db==1.2.0), ranks all 10 jobs from jobradar.rl, writes docs/demo.html
+make demo    # installs the pinned Python client on first run
+make test
+make eval
 ```
-`make demo` reads a temporary copy of `jobradar.rl` (the shipped file is never modified). It prints a ranking and writes `docs/demo.html` with, per job: the itemised score, the graph path (`User -LIKED-> j01 -SIMILAR_TO(0.7)-> j03`), and the SIMILAR_TO links. It also replays one feedback change in a temp copy: flip `j05` from DISMISSED to LIKED: `j05` moves 25 -> 60 (my own verdict) and its repost `j06` moves 30 -> 55 (the evidence path through `j05` changed); no other job moves. Duplicates are capped at 60 so a repost never outranks a new job.
 
-## Evaluation
-`make eval` compares the graph scorer with a context-free baseline (skill overlap only) on 6 author-labelled synthetic pairs (`eval/pairs.json`, results in `eval/results.md`): graph 6/6, baseline 4/6 (1 loss, 2 ties). This is a small fixture-specific check that the graph signals (own verdicts, reposts, similar-job feedback, related skills) change rankings in the intended direction; it is not evidence of general ranking quality.
+Open `docs/demo.html` locally for the ranked cards, score breakdowns and evidence paths. The keyless demo and evaluation read disposable copies of the committed `jobradar.rl`. No server or model download is needed. The score is a preference heuristic out of 100.
 
-Scoring uses six graph queries: required skills and overlap, `RELATED_TO` skills I lack but am adjacent to, similar liked/dismissed jobs at the same company, `SIMILAR_TO` duplicate status, my own verdict on the job, and the evidence path.
+Try the feedback replay at the end of the demo. Changing one verdict on `j05` from dismissed to liked raises its score from **45 to 80**. Its neighbor `j06` moves from **50 to 75** through the same-company similarity edge. The other eight scores stay fixed. The two listings share a publication date, so their publication order is unknown.
 
-## Setup and run
+## Inside the single-file graph
+
+`Job` nodes link to `Company`, `Skill` and `Location`. A synthetic `User` has skills, has seen listings and can like or dismiss them. `RELATED_TO` connects adjacent skills. `SIMILAR_TO` connects cross-board listings at the same company using title and skill overlap, plus one curated weaker link. The edge's stored direction follows job ID only.
+
+The scorer reads required skills, exact matches, adjacent skills, own verdicts and same-company neighbor verdicts. A likely repost requires a personally seen, strictly earlier ISO-dated listing on another board with similarity at least 0.8. Reposts lose 20 points and are capped at 60. Similarity alone carries no repost penalty. SEEN records exposure, independent of feedback. The ranking includes seen jobs so judges can inspect the propagation.
+
 ```bash
-curl -sSfL https://relatedb.ai/install.sh | bash     # Relate CLI (tested with v1.2.0)
-python3 -m venv .venv && .venv/bin/pip install relate-db
-
-# inspect the committed graph (read-only)
-relate query --database ./jobradar.rl --read-only --mode envelope \
-  'MATCH (n) RETURN labels(n)[0] AS l, count(*) AS n ORDER BY l'
-
-# import jobs (idempotent MERGE, never deletes) and add SIMILAR_TO edges
-make import        # = PYTHONPATH=. .venv/bin/python -m jobradar_relate.importer data/sample_jobs.json jobradar.rl
-
-# score with graph facts + explanation path
-make score         # j02 j06 j09
-make test          # unit tests (temp store, never touches jobradar.rl)
+# With Relate CLI v1.2.0 installed and make demo run:
+make build OUT=/tmp/fresh-jobradar.rl   # choose a path that does not exist
+relate query -d jobradar.rl --read-only 'MATCH (:User)-[:SEEN]->(j:Job) RETURN j.id ORDER BY j.id'
+make score                             # three individual explanations
+make sqlite                            # synthetic SQLite -> importer JSON
 ```
-SQLite: `jobradar_relate/sqlite_adapter.py` reads a `jobs` table (synthetic schema built by `data/make_sample_sqlite.py`) into importer JSON; `make sqlite` demos it.
-The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL`, `LLM_API_KEY`, `LLM_MODEL` (OpenAI-compatible, temperature 0); it receives only the graph facts. The output field `scorer` says which one ran. The LLM path was run once against an OpenAI-compatible gateway (`deepseek-flash`): 2 of 3 jobs were scored by the LLM, 1 timed out and used the fallback, which `scorer` reported correctly.
 
-`make build OUT=/tmp/x.rl` rebuilds the example graph from `data/sample_jobs.json` + `graph/profile.cypher` into a new file; `graph/explain.cypher` is a standalone query returning the same facts as the scorer.
+`make build` imports `data/sample_jobs.json` and applies `graph/profile.cypher`. `make import` additively applies those fixtures to the root store. `graph/explain.cypher` illustrates the overlap and same-company feedback portion of the evidence. The Python client is pinned to `relate-db==1.2.0`. Install the matching CLI from [Relate](https://relatedb.ai).
 
-## Where the data lives
-`./jobradar.rl` in the repo root (single file, ~48 KB, synthetic data).
+The individual scorer optionally calls an OpenAI-compatible endpoint if `LLM_URL`, `LLM_MODEL` and `LLM_API_KEY` are set. Its response passes a schema and token heuristic before use. That heuristic cannot establish factual faithfulness. The judge demo and evaluation always use deterministic scoring.
 
-## Limits
-- SIMILAR_TO is a simple heuristic (same company, different source, title + skill overlap); cross-company duplicates are not detected.
-- The SQLite adapter targets a synthetic schema, not the real Jobradar database.
-- Job Ops, a separate earlier project of mine, is not part of this.
+## Evaluation and limits
+
+On six author-labelled comparisons, the graph scores **6/6** and skill overlap alone scores **4/6**, counting ties as half. The labels mirror the scorer's signals, making this a regression check. Ten synthetic jobs cannot establish real-world ranking quality. Similarity can miss renamed roles and confuse genuinely separate openings with identical titles. Inspect every pair and both scores in [the generated evaluation](eval/results.md).

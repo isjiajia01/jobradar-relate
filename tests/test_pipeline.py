@@ -22,6 +22,10 @@ class Pipeline(unittest.TestCase):
         self.assertEqual(n, 10)
 
     def test_duplicate_detected(self):
+        self.assertEqual(facts.gather(self.db, "j02")["status"], "new")
+        self.db.execute("MATCH (u:User {id:'me'}),(j:Job {id:'j01'}) MERGE (u)-[:SEEN]->(j)")
+        self.assertEqual(facts.gather(self.db, "j01")["status"], "seen")
+        self.assertEqual(facts.gather(self.db, "j02", "someone_else")["status"], "new")
         f = facts.gather(self.db, "j02")
         self.assertEqual(f["status"], "likely_duplicate")
         self.assertEqual(f["overlap"], ["Python", "SQL"])
@@ -49,10 +53,16 @@ class Pipeline(unittest.TestCase):
         self.assertEqual(n, 1); db.close()
 
     def _context(self):
-        for q in ("MATCH (a:Skill {name:'SQL'}),(b:Skill {name:'dbt'}) MERGE (a)-[:RELATED_TO]->(b)",
+        for q in ("MATCH (u:User {id:'me'}) UNWIND ['j01','j05'] AS id MATCH (j:Job {id:id}) MERGE (u)-[:SEEN]->(j)",
+                  "MATCH (a:Skill {name:'SQL'}),(b:Skill {name:'dbt'}) MERGE (a)-[:RELATED_TO]->(b)",
                   "MATCH (u:User {id:'me'}),(j:Job {id:'j05'}) MERGE (u)-[:DISMISSED]->(j)",
                   "MATCH (u:User {id:'me'}),(j:Job {id:'j01'}) MERGE (u)-[:LIKED]->(j)"):
             self.db.execute(q)
+
+    def test_same_day_has_no_publication_order(self):
+        self._context()
+        self.assertEqual(facts.gather(self.db, "j06")["status"], "similar_seen")
+        self.assertEqual(facts.gather(self.db, "j05")["status"], "seen")
 
     def test_related_skill_changes_score(self):
         before = score.fallback(facts.gather(self.db, "j01"))["score"]

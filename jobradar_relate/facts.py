@@ -1,4 +1,4 @@
-"""The four graph queries run BEFORE LLM scoring. Read-only; values bound as parameters."""
+"""Graph fact queries run BEFORE LLM scoring. Read-only; values bound as parameters."""
 Q1 = """MATCH (j:Job {id:$id})-[:REQUIRES]->(s:Skill)
 OPTIONAL MATCH (:User {id:$user})-[h:HAS_SKILL]->(s)
 RETURN s.name AS skill, h IS NOT NULL AS have ORDER BY skill LIMIT 50"""
@@ -7,8 +7,12 @@ Q2 = """MATCH (j:Job {id:$id})-[:SIMILAR_TO]-(o:Job)-[:AT]->(:Company)<-[:AT]-(j
 OPTIONAL MATCH (:User {id:$user})-[f:LIKED|DISMISSED]->(o)
 RETURN o.id AS id, type(f) AS verdict ORDER BY id LIMIT 50"""
 Q3 = """MATCH (j:Job {id:$id})-[r:SIMILAR_TO]-(d:Job)
-RETURN d.id AS id, d.source AS source, r.score AS score ORDER BY score DESC, id LIMIT 10"""
-Q4 = """MATCH (j:Job {id:$id})-[:AT]->(c:Company) RETURN j.title AS title, j.source AS source, c.name AS company LIMIT 1"""
+OPTIONAL MATCH (:User {id:$user})-[v:SEEN]->(d)
+RETURN d.id AS id, d.source AS source, d.posted_date AS posted_date,
+       v IS NOT NULL AS seen, r.score AS score ORDER BY score DESC, id"""
+Q4 = """MATCH (j:Job {id:$id})-[:AT]->(c:Company) OPTIONAL MATCH (:User {id:$user})-[v:SEEN]->(j)
+RETURN j.title AS title, j.source AS source, j.posted_date AS posted_date,
+       v IS NOT NULL AS seen, c.name AS company LIMIT 1"""
 # Q5: required skills I lack but that are RELATED_TO a skill I have (either direction)
 Q5 = """MATCH (j:Job {id:$id})-[:REQUIRES]->(s:Skill)
 MATCH (s)-[:RELATED_TO]-(m:Skill)<-[:HAS_SKILL]-(:User {id:$user})
@@ -33,13 +37,23 @@ def gather(db, job_id, user="me"):
     liked = [r["id"] for r in sim if r["verdict"] == "LIKED"]
     dismissed = [r["id"] for r in sim if r["verdict"] == "DISMISSED"]
     links = _rows(db, Q3, p)
-    dup = [l for l in links if l["score"] >= DUP_SCORE and l["source"] != head[0]["source"]]
-    status = "likely_duplicate" if dup else ("similar_seen" if links else "new")
     h = head[0]
+    seen_links = [link for link in links if link["seen"]]
+    duplicates = [link for link in seen_links if link["score"] >= DUP_SCORE
+                  and link["source"] != h["source"] and link["posted_date"]
+                  and h["posted_date"] and link["posted_date"] < h["posted_date"]]
+    status = "seen" if h["seen"] else "new"
+    if duplicates:
+        status = "likely_duplicate"
+    elif seen_links and not h["seen"]:
+        status = "similar_seen"
     wt = {l["id"]: l["score"] for l in links}
     hops = [{"verdict": r["verdict"], "via": r["id"], "weight": wt.get(r["id"]),
              "text": f"User -{r['verdict']}-> {r['id']} -SIMILAR_TO({wt.get(r['id'])})-> {job_id} (same company: {h['company']})"}
             for r in sim if r["verdict"]]
+    for peer in duplicates:
+        hops.append({"verdict": "SEEN", "via": peer["id"], "weight": peer["score"],
+                     "text": f"User -SEEN-> {peer['id']} ({peer['posted_date']}) -SIMILAR_TO({peer['score']})- {job_id} ({h['posted_date']})"})
     hops += [{"verdict": "RELATED_TO", "via": r["via"], "weight": None,
               "text": f"{job_id} -REQUIRES-> {r['skill']} -RELATED_TO- {r['via']} <-HAS_SKILL- User"} for r in related]
     path = (f"{h['title']}@{h['company']} -REQUIRES-> {', '.join(required) or 'none'}; "

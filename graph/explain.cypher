@@ -1,4 +1,4 @@
-// Standalone version of the scorer's facts (same semantics as jobradar_relate/facts.py).
+// Inspect skill overlap and same-company feedback for a listing.
 // Usage: relate query --database ./jobradar.rl --read-only --mode envelope --param job=j02 "$(cat graph/explain.cypher)"
 MATCH (j:Job {id:$job})-[:AT]->(c:Company)
 OPTIONAL MATCH (j)-[:REQUIRES]->(s:Skill)

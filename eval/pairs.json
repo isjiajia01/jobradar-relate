@@ -4,6 +4,6 @@
   ["j03", "j10", "control: liked job with related skills beats a weak skill match"],
   ["j08", "j05", "I dismissed j05 myself; j08 is a fresh job with a weaker skill match"],
   ["j07", "j02", "j02 is a LinkedIn repost of a job I already saw; j07 is new with equal skill match"],
-  ["j08", "j06", "j06 is a repost of j05, which I dismissed"],
-  ["j04", "j06", "j06 repeats a dismissed job; j04 is new"]
+  ["j08", "j06", "j06 resembles j05, which I dismissed"],
+  ["j04", "j06", "j06 resembles a dismissed job; j04 is new"]
 ]}
