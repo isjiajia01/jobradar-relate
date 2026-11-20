@@ -1,0 +1,315 @@
+{
+ "_note": "AI-annotated preferences (fresh reviewer agent, title/company/skills only) for a FICTIONAL candidate: Python, SQL, Docker, Spark; lukewarm on pure Java/Scala; no management roles. NOT a real person's feedback.",
+ "labels": [
+  {
+   "confidence": "high",
+   "id": "d01",
+   "label": "DISMISSED",
+   "reason": "Java/Scala/Hadoop stack, no Python or SQL"
+  },
+  {
+   "confidence": "high",
+   "id": "d02",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, Airflow, Docker; Scala is minor"
+  },
+  {
+   "confidence": "high",
+   "id": "d03",
+   "label": "DISMISSED",
+   "reason": "Scala/Kafka/Spark/REST only, no Python or SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d04",
+   "label": "LIKED",
+   "reason": "Python, SQL, Airflow, Snowflake; no Spark listed"
+  },
+  {
+   "confidence": "high",
+   "id": "d05",
+   "label": "DISMISSED",
+   "reason": "Java/Scala/Hadoop, no Python or SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d06",
+   "label": "NEUTRAL",
+   "reason": "Python, Spark, Docker, but ML/TensorFlow drift, no SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d07",
+   "label": "NEUTRAL",
+   "reason": "Python and Spark, Docker, but Java/Scala heavy"
+  },
+  {
+   "confidence": "low",
+   "id": "d08",
+   "label": "NEUTRAL",
+   "reason": "Python and Spark, but Java/TensorFlow and no SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d09",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java/Scala/Hadoop mix"
+  },
+  {
+   "confidence": "low",
+   "id": "d10",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but C++/Scala/MongoDB scattered"
+  },
+  {
+   "confidence": "medium",
+   "id": "d11",
+   "label": "DISMISSED",
+   "reason": "Java-led, no Python, ML flavour"
+  },
+  {
+   "confidence": "medium",
+   "id": "d12",
+   "label": "DISMISSED",
+   "reason": "Scala/Azure/K8s, no Python"
+  },
+  {
+   "confidence": "medium",
+   "id": "d13",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java and Hadoop too"
+  },
+  {
+   "confidence": "high",
+   "id": "d14",
+   "label": "DISMISSED",
+   "reason": "Java and Spark only, marketing sector, thin"
+  },
+  {
+   "confidence": "high",
+   "id": "d15",
+   "label": "DISMISSED",
+   "reason": "Java/Scala/Hadoop, no Python or SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d16",
+   "label": "NEUTRAL",
+   "reason": "Junior fits, but no Spark; JS/Mongo/Hadoop mix"
+  },
+  {
+   "confidence": "medium",
+   "id": "d17",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java and Hadoop; thin"
+  },
+  {
+   "confidence": "medium",
+   "id": "d18",
+   "label": "DISMISSED",
+   "reason": "Polyglot Java/Scala/Go, K8s, no SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d19",
+   "label": "DISMISSED",
+   "reason": "Same polyglot Java/Scala/Go stack, no SQL"
+  },
+  {
+   "confidence": "high",
+   "id": "d20",
+   "label": "DISMISSED",
+   "reason": "Java/Scala-led, no Python"
+  },
+  {
+   "confidence": "high",
+   "id": "d21",
+   "label": "DISMISSED",
+   "reason": "Java/Scala/Hadoop with ML, no Python"
+  },
+  {
+   "confidence": "low",
+   "id": "d22",
+   "label": "NEUTRAL",
+   "reason": "SQL and Hadoop only; too thin to judge"
+  },
+  {
+   "confidence": "medium",
+   "id": "d23",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark core; Django odd but minor"
+  },
+  {
+   "confidence": "medium",
+   "id": "d24",
+   "label": "NEUTRAL",
+   "reason": "Python and Spark, but Java, ML, K8s breadth"
+  },
+  {
+   "confidence": "medium",
+   "id": "d25",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, Docker; Scala and ML extras"
+  },
+  {
+   "confidence": "low",
+   "id": "d26",
+   "label": "NEUTRAL",
+   "reason": "Kitchen-sink skill list; core matches but unfocused"
+  },
+  {
+   "confidence": "high",
+   "id": "d27",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, Kafka, AWS; clean fit"
+  },
+  {
+   "confidence": "medium",
+   "id": "d28",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, AWS; Scala is secondary"
+  },
+  {
+   "confidence": "high",
+   "id": "d29",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, multi-cloud; clean fit"
+  },
+  {
+   "confidence": "medium",
+   "id": "d30",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java/Scala/ML broad"
+  },
+  {
+   "confidence": "medium",
+   "id": "d31",
+   "label": "NEUTRAL",
+   "reason": "Python, Spark fit but no SQL; very thin"
+  },
+  {
+   "confidence": "medium",
+   "id": "d32",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Scala/ML/Hadoop mix"
+  },
+  {
+   "confidence": "medium",
+   "id": "d33",
+   "label": "DISMISSED",
+   "reason": "No Spark; generic Java/JS/Python backend feel"
+  },
+  {
+   "confidence": "low",
+   "id": "d34",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Ruby/Scala scattered"
+  },
+  {
+   "confidence": "medium",
+   "id": "d35",
+   "label": "NEUTRAL",
+   "reason": "Python, Airflow, Docker, but no Spark or SQL"
+  },
+  {
+   "confidence": "medium",
+   "id": "d36",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java/Scala/ML mix"
+  },
+  {
+   "confidence": "medium",
+   "id": "d37",
+   "label": "NEUTRAL",
+   "reason": "Python, SQL, Spark, but Java/Scala/ML mix"
+  },
+  {
+   "confidence": "high",
+   "id": "d38",
+   "label": "DISMISSED",
+   "reason": "Java/Scala/Mongo, no Python or SQL"
+  },
+  {
+   "confidence": "low",
+   "id": "d39",
+   "label": "NEUTRAL",
+   "reason": "Python/Spark/Airflow fit, but Java/Scala/TF sprawl"
+  },
+  {
+   "confidence": "high",
+   "id": "d40",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, Airflow, Docker, Snowflake: strong match"
+  },
+  {
+   "confidence": "high",
+   "id": "d41",
+   "label": "LIKED",
+   "reason": "Python, SQL, Spark, Docker, Kafka; strong match"
+  },
+  {
+   "confidence": "medium",
+   "id": "d42",
+   "label": "LIKED",
+   "reason": "Python, Spark, Airflow, Kafka; no SQL, Scala minor"
+  },
+  {
+   "confidence": "medium",
+   "id": "d43",
+   "label": "LIKED",
+   "reason": "Python, SQL, Airflow, Docker, cloud; no Spark listed"
+  },
+  {
+   "confidence": "medium",
+   "id": "d44",
+   "label": "DISMISSED",
+   "reason": ".NET/C# mix, scattered stack"
+  },
+  {
+   "confidence": "medium",
+   "id": "d45",
+   "label": "DISMISSED",
+   "reason": "Java/Scala-led, no Python"
+  },
+  {
+   "confidence": "low",
+   "id": "d46",
+   "label": "NEUTRAL",
+   "reason": "Spark, Kafka, Airflow, but no Python or SQL"
+  },
+  {
+   "confidence": "high",
+   "id": "d47",
+   "label": "DISMISSED",
+   "reason": "Chief architect, not wanted"
+  },
+  {
+   "confidence": "high",
+   "id": "d48",
+   "label": "DISMISSED",
+   "reason": "Chief architect, Java/.NET"
+  },
+  {
+   "confidence": "high",
+   "id": "d49",
+   "label": "DISMISSED",
+   "reason": "CTO role, management"
+  },
+  {
+   "confidence": "high",
+   "id": "d50",
+   "label": "DISMISSED",
+   "reason": "CTO role, Java/Go"
+  }
+ ],
+ "similar_pairs_clear": [
+  [
+   "d18",
+   "d19"
+  ],
+  [
+   "d36",
+   "d37"
+  ]
+ ]
+}

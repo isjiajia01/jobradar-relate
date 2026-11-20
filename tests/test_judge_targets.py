@@ -22,6 +22,11 @@ class JudgeTargets(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         return result.stderr
 
+    def test_real_eval_reports_both_scorers(self):
+        output = self.run_make("real-eval")
+        self.assertIn("graph scorer", output)
+        self.assertIn("recovers 0/2", output)
+
     def test_real_catalog_runs_without_similar_links(self):
         output = self.run_make("real", "QUERY=developer")
         self.assertIn("50 real postings", output)

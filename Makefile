@@ -5,10 +5,10 @@ N ?= 500
 replay: JOB ?= j05
 why similar: JOB ?= j06
 export QUERY JOB VERDICT N
-.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check scale real
+.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check scale real real-eval
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-test eval demo search replay why similar similar-check scale real: | .venv/bin/python
+test eval demo search replay why similar similar-check scale real real-eval: | .venv/bin/python
 .venv/bin/python:
 	$(MAKE) venv
 test:
@@ -32,6 +32,9 @@ search:
 	$(PY) -m jobradar_relate.discover -- "$$QUERY"
 real:  # 50 real Djinni postings on a temp graph; QUERY=term; never touches jobradar.rl
 	$(PY) -m jobradar_relate.real $(QUERY)
+
+real-eval:  # scorer vs AI-annotated labels on the 50 real postings
+	$(PY) -m jobradar_relate.real_eval
 scale:
 	@$(PY) -m jobradar_relate.scale -- "$$N"
 

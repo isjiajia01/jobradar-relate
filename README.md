@@ -60,6 +60,17 @@ The other eight scores do not move. **Zero-install view:** [jobradar.isjia.page]
 
 `make real` ranks 50 real public postings from the MIT-licensed Djinni dataset (see `DATA-NOTICES.md`) on a temporary graph. Only the **catalog** is real. The profile is still invented, and skills come from a 40-word keyword list we wrote, applied to truncated descriptions, so some are missed. The sample is skewed towards "Big Data" titles because of how the dataset is ordered. **This catalog has no `SIMILAR_TO` links:** Djinni is a single source and our similar-listing rule needs the same company on two boards. So repost detection and feedback replay are demonstrated only on the synthetic fixture. There is no duplicate label in Djinni either, so the evaluation is not run here.
 
+### Check against AI-annotated labels (`make real-eval`)
+
+A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for a **fictional** candidate (Python, SQL, Docker, Spark), from title, company and skill keywords only (`data/real/ai_labels.json`). These are **AI labels, not a real person's feedback**, and the annotator also judged mainly by skill fit, so this is not independent validation. Result: LIKED 11, NEUTRAL 20, DISMISSED 19.
+
+| Scorer | AUC, LIKED above DISMISSED | LIKED in top 11 |
+|---|---|---|
+| Our scorer (no feedback or similar edges here) | 0.81 | 4 / 11 |
+| Plain count of matched skills | 0.92 | 4 / 11 |
+
+Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company, so it recovers **0 of 2**. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
+
 ## Optional read-only MCP recipe
 
 With the Relate v1.2.0 CLI on `PATH`, configure your MCP host to launch the absolute path to `scripts/mcp-readonly.sh` over stdio. From the repository root, its command is `relate serve --database jobradar.rl --mcp stdio --read-only`. The judge targets work without MCP.
