@@ -1,12 +1,41 @@
 # Jobradar · connected job memory
 
+Explainable job recommendations, remembered in a single-file Relate graph.
+
 Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile has seen and liked `j01`, which was published before `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
 
 This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for a personal job digest. All listings, profile choices and outcomes in this repository are synthetic.
 
-## Run the judge demo
+## Use case
+
+I keep a personal daily LLM job digest (Jobindex, Jobnet, LinkedIn). It scores each posting from one description, so it forgets what I liked or dismissed, cannot see that boards repost the same opening, and cannot explain a score. The relationships that matter: job to skills, job to company, job to similar listings on other boards, and my verdicts on neighbouring jobs. This repo is a synthetic prototype of that memory layer.
+
+## How it uses Relate
+
+- **Mode:** single file (embedded, in-process; no server, no signup).
+- **Why this mode:** one file per user is easy to back up, commit and inspect. Judges can open the exact store, `jobradar.rl`, with the `relate` CLI or the Python client. It is persistent, not `:memory:`.
+- **What the graph models:** `Job`, `Company`, `Skill`, `Location`, `User`; edges `AT`, `POSTED`, `REQUIRES`, `IN`, `SIMILAR_TO {score}`, `LIKED`, `DISMISSED`, `SEEN`, `HAS_SKILL`, `RELATED_TO`. Details below.
+- **Relate capabilities used:** embedded Python client (`relate-db` 1.2.0), CLI (`--read-only`), Cypher with bound parameters, persisted full-text index and `SEARCH`.
+
+## Where the data lives
+
+`./jobradar.rl` in the repo root (about 48 KB, synthetic). `make build OUT=<new path>` rebuilds an equivalent store from `data/sample_jobs.json` and `graph/profile.cypher`.
+
+## Origin, disclosure and AI use
+
+- **Started during the contest:** all code in this repository was first committed on 2026-11-20, after the contest began. No code was copied from my earlier private Jobradar project; only the idea (a daily job digest with LLM scoring) carries over. Jobradar is a personal tool, not an employer or production system.
+- **Data:** every job, company and profile choice is synthetic. No real feedback or other people's data is included.
+- **AI tools:** the repository was written with AI coding agents under my direction, running in the Pi coding-agent harness. An agent wrote most of the code, tests, fixtures and docs; a separate review agent audited the design and led to fixes (unvalidated LLM output, inconsistent fixtures, a scoring gap, repost-detection changes). I chose the scope, approved each step and checked results. The optional LLM scoring path calls an OpenAI-compatible endpoint; the judge path uses no model.
+- **Third-party:** Relate v1.2.0 (Apache-2.0), `relate-db` 1.2.0, Python standard library (including SQLite).
+
+## License
+
+MIT, see [LICENSE](LICENSE).
+
+## Setup and run (judge demo)
 
 ```bash
+# Prerequisites: Python 3.12+, make; Relate CLI optional (relatedb.ai)
 make demo    # installs the pinned Python client on first run
 make search QUERY=engineer
 make test
