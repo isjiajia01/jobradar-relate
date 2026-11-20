@@ -25,7 +25,7 @@ I keep a personal daily LLM job digest (Jobindex, Jobnet, LinkedIn). It scores e
 
 ## Setup and run
 
-Prerequisites: Python 3.12+ and `make`. The Relate CLI v1.2.0 ([relatedb.ai](https://relatedb.ai)) is optional for the judge targets (required for the optional `make real` and `make real-eval`). No API key, server or model download.
+Prerequisites: Python 3.12+ and `make`. The Relate CLI v1.2.0 ([relatedb.ai](https://relatedb.ai)) is optional for the judge targets; `make real*` need it, and `make test` skips those three tests without it. Install: `curl -sSfL https://relatedb.ai/install.sh | bash`. No API key, server or model download.
 
 ```bash
 make demo                          # ranks 10 jobs, writes docs/demo.html
@@ -73,7 +73,7 @@ A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for 
 
 Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company on two boards, and this catalog is a single source, so it creates no links; that is **0 of 2** overlap with the annotator's broader similar-role pairs, not a measured duplicate-recall result. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
 
-### Pre-registered attempt to improve the scorer: it lost
+### Pre-committed attempt to improve the scorer: it lost
 
 We tried a preference-aware scorer (10 points per exact skill, a Java/Scala title penalty, a zero for management/architect title words) and froze the protocol before drawing a fresh 50-posting held-out sample and before any labels existed (`docs/preregistration.md` on branch `scorer-v2`, including one pre-label amendment that redrew a one-stack sample). A fresh AI annotator labelled it (LIKED 9, NEUTRAL 7, DISMISSED 34). One run: AUC 0.89 for the new scorer, 0.98 for the current scorer, 0.99 for the plain skill count. **The new scorer lost, so it is not merged and the scorer here is unchanged.** Post-hoc, not acted on: the exclusion rule matched "Management" in the title "Data Management Team" and zeroed a LIKED posting. On this sample the current scorer was close to the baseline (0.98 versus 0.99), so the earlier 0.81 on the first 50 was one sample; both are single-annotator, fictional-profile results.
 
@@ -108,7 +108,7 @@ Small and fixture-specific. On six author-labelled pairs the graph scorer gets *
 - **Started during the contest:** all code in this repository was first committed on 2026-11-20, after the contest began. No code was copied from my earlier private Jobradar project; only the idea (a daily job digest with LLM scoring) carries over. Jobradar is a personal tool, not an employer or production system.
 - **Data:** the shipped store, profile and feedback are synthetic. The optional `make real` catalog is 50 public MIT-licensed Djinni listings (`DATA-NOTICES.md`); its profile and labels are invented or AI-made. No real feedback or other people's data is included.
 - **AI tools:** the repository was written with AI coding agents under my direction, running in the Pi coding-agent harness. An agent wrote most of the code, tests, fixtures and docs; a separate review agent audited the design and led to fixes (unvalidated LLM output, inconsistent fixtures, a scoring gap, repost-detection changes). I chose the scope, approved each step and checked results. The optional LLM scoring path calls an OpenAI-compatible endpoint; the judge path uses no model.
-- **Third-party:** Relate v1.2.0 (Apache-2.0), `relate-db` 1.2.0, Python standard library (including SQLite).
+- **Third-party:** Djinni Recruitment Dataset (lang-uk, Hugging Face, MIT; 50 postings, see `DATA-NOTICES.md`); Relate v1.2.0 (Apache-2.0), `relate-db` 1.2.0, Python standard library (including SQLite).
 
 ## License
 

@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := demo
 PY := PYTHONPATH=. .venv/bin/python
 QUERY ?= engineer
 VERDICT ?= LIKED
