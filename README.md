@@ -73,6 +73,10 @@ A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for 
 
 Our scorer ranks worse than a plain skill count: it uses the *fraction* of required skills matched, while the annotator mostly penalised Java/Scala-heavy stacks. We did not change the scorer to fit these labels. The annotator named two clear similar pairs (d18/d19, d36/d37; same title and skills, different companies). Our importer rule needs the same company on two boards, and this catalog is a single source, so it creates no links; that is **0 of 2** overlap with the annotator's broader similar-role pairs, not a measured duplicate-recall result. A same-title, same-skill-set check finds exactly those two pairs, but we defined it after seeing the labels, so it is not part of the importer. Small sample, one annotator, one run.
 
+### Pre-registered attempt to improve the scorer: it lost
+
+We tried a preference-aware scorer (10 points per exact skill, a Java/Scala title penalty, a zero for management/architect title words) and froze the protocol before drawing a fresh 50-posting held-out sample and before any labels existed (`docs/preregistration.md` on branch `scorer-v2`, including one pre-label amendment that redrew a one-stack sample). A fresh AI annotator labelled it (LIKED 9, NEUTRAL 7, DISMISSED 34). One run: AUC 0.89 for the new scorer, 0.98 for the current scorer, 0.99 for the plain skill count. **The new scorer lost, so it is not merged and the scorer here is unchanged.** Post-hoc, not acted on: the exclusion rule matched "Management" in the title "Data Management Team" and zeroed a LIKED posting. On this sample the current scorer was close to the baseline (0.98 versus 0.99), so the earlier 0.81 on the first 50 was one sample; both are single-annotator, fictional-profile results.
+
 ## Optional read-only MCP recipe
 
 With the Relate v1.2.0 CLI on `PATH`, configure your MCP host to launch the absolute path to `scripts/mcp-readonly.sh` over stdio. From the repository root, its command is `relate serve --database jobradar.rl --mcp stdio --read-only`. The judge targets work without MCP.
