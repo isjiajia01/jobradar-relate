@@ -2,12 +2,12 @@ PY := PYTHONPATH=. .venv/bin/python
 QUERY ?= engineer
 VERDICT ?= LIKED
 replay: JOB ?= j05
-why: JOB ?= j06
+why similar: JOB ?= j06
 export QUERY JOB VERDICT
-.PHONY: help replay why search eval demo venv test import build score sqlite
+.PHONY: help replay why search eval demo venv test import build score sqlite similar similar-check
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-test eval demo search replay why: | .venv/bin/python
+test eval demo search replay why similar similar-check: | .venv/bin/python
 .venv/bin/python:
 	$(MAKE) venv
 test:
@@ -34,8 +34,13 @@ help:
 	@echo 'demo | search QUERY=engineer | eval | test'
 	@echo 'replay JOB=j05 VERDICT=LIKED  (LIKED, DISMISSED or SEEN)'
 	@echo 'why JOB=j06                   (score parts and evidence)'
+	@echo 'similar JOB=j06 | similar-check (temporary lexical vector index)'
 	@echo 'venv | import | build OUT=<new path> | score | sqlite'
 replay:
 	@$(PY) -m jobradar_relate.inspect_job replay -- "$$JOB" "$$VERDICT"
 why:
 	@$(PY) -m jobradar_relate.inspect_job why -- "$$JOB"
+similar:
+	@$(PY) -m jobradar_relate.similar -- "$$JOB"
+similar-check:
+	@$(PY) -m jobradar_relate.similar --check
