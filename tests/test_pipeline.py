@@ -31,6 +31,17 @@ class Pipeline(unittest.TestCase):
         self.assertEqual(f["overlap"], ["Python", "SQL"])
         self.assertIn("-REQUIRES->", f["path"])
 
+    def test_search_shortlist_and_no_matches(self):
+        from jobradar_relate.discover import discover
+        for statement in (ROOT / "graph/profile.cypher").read_text().splitlines():
+            if statement and not statement.startswith("//"):
+                self.db.execute(statement)
+        hits, rows = discover(self.db, "engineer")
+        self.assertEqual(hits, 5)
+        self.assertEqual([r["facts"]["job"] for r in rows], ["j04", "j08", "j02"])
+        self.assertEqual(discover(self.db, "volcanologist"), (0, []))
+        self.assertEqual(len(discover(self.db, "engineer", "another-profile")[1]), 5)
+
     def test_score_range(self):
         r = score.recommend(self.db, "j02")
         self.assertTrue(0 <= r["score"] <= 100)

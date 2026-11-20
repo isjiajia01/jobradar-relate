@@ -17,6 +17,8 @@ def breakdown(f):
 
 def fallback(f):
     s = max(0, min(100, sum(v for _, v in breakdown(f))))
+    if f["status"] == "likely_duplicate":
+        s = min(s, 60)
     why = f"{len(f['overlap'])} of {len(f['required'])} required skills match your profile"
     if f["own"]: why += f", you already {f['own'].lower()} this exact job"
     if f["related"]: why += f", {len(f['related'])} more are related to skills you have"
@@ -61,7 +63,7 @@ def recommend(db, job_id):
     except Exception as e: print("llm failed, using fallback:", e, file=sys.stderr); r = None
     used = "llm" if r is not None else "fallback"
     r = r or fallback(f)
-    if f["status"] == "likely_duplicate": r["score"] = min(r["score"], 60)   # duplicates never outrank new jobs
+    if f["status"] == "likely_duplicate": r["score"] = min(r["score"], 60)
     return {"job": job_id, "title": f["title"], "status": f["status"], **r, "path": f["path"], "scorer": used}
 
 if __name__ == "__main__":

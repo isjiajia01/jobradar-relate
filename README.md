@@ -1,6 +1,6 @@
 # Jobradar · connected job memory
 
-Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile liked `j01` and saw it before encountering `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
+Why does the same Data Engineer opening score **95 on one board and 60 on another**? The synthetic profile has seen and liked `j01`, which was published before `j02`. A cross-board similarity edge connects the listings. The later posting gets a repost penalty. Both scores carry the graph evidence that produced them.
 
 This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for a personal job digest. All listings, profile choices and outcomes in this repository are synthetic.
 
@@ -8,11 +8,14 @@ This solo entry for the *Relate by Neo4j Hackathon* explores a memory layer for 
 
 ```bash
 make demo    # installs the pinned Python client on first run
+make search QUERY=engineer
 make test
 make eval
 ```
 
 Open `docs/demo.html` locally for the ranked cards, score breakdowns and evidence paths. The keyless demo and evaluation read disposable copies of the committed `jobradar.rl`. No server or model download is needed. The score is a preference heuristic out of 100.
+
+**Search for “engineer”.** Relate's persisted `job_titles` full-text index retrieves up to 25 listings with a text relevance score. Five titles match, all tied on text relevance. Two are already seen. The three remaining candidates rank **ML Engineer (70), DevOps Engineer (65), Data Engineer (60)** by personal fit, with text relevance and job ID breaking ties. Search matches titles only. Try `make search QUERY=developer` to inspect another shortlist.
 
 Try the feedback replay at the end of the demo. Changing one verdict on `j05` from dismissed to liked raises its score from **45 to 80**. Its neighbor `j06` moves from **50 to 75** through the same-company similarity edge. The other eight scores stay fixed. The two listings share a publication date, so their publication order is unknown.
 

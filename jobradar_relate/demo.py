@@ -3,6 +3,7 @@ Works on a temporary COPY of the .rl file, so the shipped store is never modifie
 Usage: python -m jobradar_relate.demo [jobradar.rl] [out.html]"""
 import html, shutil, sys, tempfile, os
 import relate
+from .discover import discover
 from .facts import gather
 from .score import breakdown, fallback
 
@@ -11,7 +12,6 @@ def rank(db):
     out = []
     for i in ids:
         f = gather(db, i); r = fallback(f)
-        if f["status"] == "likely_duplicate": r["score"] = min(r["score"], 60)
         out.append({"f": f, "score": r["score"], "why": r["explanation"], "parts": breakdown(f)})
     return sorted(out, key=lambda x: (-x["score"], x["f"]["job"]))
 
@@ -36,16 +36,25 @@ def card(x, delta=None):
 
 def main(db_path="jobradar.rl", out="docs/demo.html", job="j05", verdict="LIKED"):
     d = tempfile.mkdtemp(); p = os.path.join(d, "c.rl"); shutil.copy(db_path, p)
-    db = relate.connect(p); base = rank(db); db.close(); shutil.rmtree(d)
+    db = relate.connect(p); base = rank(db)
+    hits, shortlist = discover(db, "engineer")
+    db.close(); shutil.rmtree(d)
     after = replay(db_path, job, verdict)
     before = {x["f"]["job"]: x["score"] for x in base}
     moved = [(x, x["score"] - before[x["f"]["job"]]) for x in after if x["score"] != before[x["f"]["job"]]]
-    page = ("<!doctype html><meta charset=utf-8><title>jobradar-relate demo</title><style>body{font:15px system-ui;max-width:900px;margin:2em auto;padding:0 1em}"
+    search_rows = "".join(
+        f"<tr><td>{html.escape(row['facts']['job'])} {html.escape(row['facts']['title'])}</td>"
+        f"<td>{row['relevance']:.3f}</td><td>{row['score']}</td><td>{html.escape(row['facts']['status'])}</td></tr>"
+        for row in shortlist)
+    page = ("<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>jobradar-relate demo</title><style>body{color:#172d34;background:#fafbf8;font:16px/1.5 system-ui;max-width:900px;margin:2em auto;padding:0 1em}"
             ".card{border:1px solid #ccc;border-radius:8px;padding:.8em 1em;margin:.8em 0}.score{float:right;background:#0a5;color:#fff;border-radius:6px;padding:0 .5em}"
-            ".cols{display:flex;gap:2em}.hop{color:#06c}.dup{color:#c60}.delta{color:#a0a;font-size:.8em}code{display:block;font-size:12px;color:#555;margin-top:.5em}</style>"
-            "<h1>jobradar-relate: ranked from the Relate graph</h1><p>Synthetic data. Deterministic scorer, no API key. Source: "
-            f"<code>{html.escape(db_path)}</code> (read as a temporary copy).</p><h2>Ranking</h2>" + "".join(card(x) for x in base)
-            + f"<h2>Feedback replay: what if I {verdict} {job}?</h2><p>Only the {verdict} edge changes in a temporary copy.</p>"
+            ".cols{display:flex;gap:2em}table{border-collapse:collapse;width:100%}td,th{text-align:left;border-bottom:1px solid #ccd6d3;padding:.4em}th{background:#e3ede6}@media(max-width:600px){.cols{display:block}td,th{padding:.2em}h3{font-size:1rem}}.hop{color:#06c}.dup{color:#c60}.delta{color:#a0a;font-size:.8em}code{display:block;font-size:12px;color:#555;margin-top:.5em}</style>"
+            "<h1>Which opening is worth a closer look?</h1><p>Synthetic data. Deterministic scorer, no API key. Source: "
+            f"<code>{html.escape(db_path)}</code> (read as a temporary copy).</p><h2>Search for “engineer”</h2>"
+            f"<p>Relate found {hits} title matches. {len(shortlist)} are unseen. Personal fit orders those listings using graph evidence.</p>"
+            "<table><thead><tr><th>Unseen listing</th><th>Text score</th><th>Fit</th><th>Status</th></tr></thead>"
+            f"<tbody>{search_rows}</tbody></table><p><a href='#feedback'>Jump to the feedback replay</a></p><h2>All listings</h2>" + "".join(card(x) for x in base)
+            + f"<h2 id='feedback'>Feedback replay: what if I {verdict} {job}?</h2><p>Only the {verdict} edge changes in a temporary copy.</p>"
             + ("".join(card(x, dlt) for x, dlt in moved) or "<p>No scores changed.</p>"))
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True); open(out, "w").write(page)
     for x in base: print(f"{x['score']:>3}  {x['f']['job']}  {x['f']['title']} @ {x['f']['company']}  [{x['f']['status']}]")
