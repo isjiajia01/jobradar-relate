@@ -60,6 +60,8 @@ The other eight scores do not move. **Zero-install view:** [jobradar.isjia.page]
 
 `make real` ranks 50 real public postings from the MIT-licensed Djinni dataset (see `DATA-NOTICES.md`) on a temporary graph. Only the **catalog** is real. The profile is still invented, and skills come from a 40-word keyword list we wrote, applied to truncated descriptions, so some are missed. The sample is skewed towards "Big Data" titles because of how the dataset is ordered. **This catalog has no `SIMILAR_TO` links:** Djinni is a single source and our similar-listing rule needs the same company on two boards. So repost detection and feedback replay are demonstrated only on the synthetic fixture. Djinni has no duplicate (requisition) label, so repost detection is not evaluated here; the check below only compares scores with AI preference labels.
 
+`make real-why JOB=d02` shows, for one real listing, which required skills the (invented) profile has exactly, which are only adjacent through a `RELATED_TO` edge we wrote (e.g. Kubernetes via Docker), and which are not covered. Adjacent is not a claim of qualification.
+
 ### Check against AI-annotated labels (`make real-eval`)
 
 A fresh reviewer agent labelled the 50 postings LIKED / NEUTRAL / DISMISSED for a **fictional** candidate (Python, SQL, Docker, Spark), from title, company and skill keywords only (`data/real/ai_labels.json`). These are **AI labels, not a real person's feedback**, and the annotator also judged mainly by skill fit, so this is not independent validation. Result: LIKED 11, NEUTRAL 20, DISMISSED 19.

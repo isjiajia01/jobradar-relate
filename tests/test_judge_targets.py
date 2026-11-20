@@ -28,6 +28,12 @@ class JudgeTargets(unittest.TestCase):
         self.assertIn("review queue (unseen jobs only)", page)
         self.assertIn("j06 6→2", page)
 
+    def test_real_why_separates_held_adjacent_and_missing(self):
+        output = self.run_make("real-why", "JOB=d02")
+        self.assertIn("have (exact):  Docker, Python, SQL, Spark", output)
+        self.assertIn("Kubernetes -RELATED_TO- Docker", output)
+        self.assertIn("not covered:   Airflow, Scala, Terraform", output)
+
     def test_real_eval_reports_both_scorers(self):
         output = self.run_make("real-eval")
         self.assertIn("graph scorer", output)
