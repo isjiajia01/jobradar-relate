@@ -56,7 +56,7 @@ def card(x, delta=None):
     return (f"<div class=card><h3>{e(f['job'])} {e(f['title'])} @ {e(f['company'])} <small>({e(f['source'])})</small>"
             f"<span class=score>{x['score']}</span>{d}</h3><p>{e(x['why'])}</p><b>status:</b> {e(f['status'])}"
             f"<div class=cols><div><b>Score parts</b><ul>{parts}</ul></div><div><b>Graph path</b><ul>{hops}</ul>"
-            f"<b>SIMILAR_TO links</b><ul>{dup}</ul></div></div><code>{e(f['path'])}</code></div>")
+            f"<b>SIMILAR_TO links</b><ul>{dup}</ul></div></div><details><summary>Raw evidence string</summary><code>{e(f['path'])}</code></details></div>")
 
 def main(db_path="jobradar.rl", out="docs/demo.html", job="j05", verdict="LIKED"):
     with closing(relate.connect(db_path, read_only=True)) as db:
@@ -69,14 +69,15 @@ def main(db_path="jobradar.rl", out="docs/demo.html", job="j05", verdict="LIKED"
         for row in shortlist)
     page = ("<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>jobradar-relate demo</title><style>body{color:#172d34;background:#fafbf8;font:16px/1.5 system-ui;max-width:900px;margin:2em auto;padding:0 1em}"
             ".card{border:1px solid #ccc;border-radius:8px;padding:.8em 1em;margin:.8em 0}.score{float:right;background:#0a5;color:#fff;border-radius:6px;padding:0 .5em}"
-            ".cols{display:flex;gap:2em}table{border-collapse:collapse;width:100%}td,th{text-align:left;border-bottom:1px solid #ccd6d3;padding:.4em}th{background:#e3ede6}@media(max-width:600px){.cols{display:block}td,th{padding:.2em}h3{font-size:1rem}}.hop{color:#06c}.dup{color:#c60}.delta{color:#a0a;font-size:.8em}code{display:block;font-size:12px;color:#555;margin-top:.5em}</style>"
+            ".cols{display:flex;gap:2em}table{border-collapse:collapse;width:100%}td,th{text-align:left;border-bottom:1px solid #ccd6d3;padding:.4em}th{background:#e3ede6}@media(max-width:600px){.cols{display:block}td,th{padding:.2em}h3{font-size:1rem}}.hop{color:#06c}.dup{color:#c60}.delta{color:#a0a;font-size:.8em}details{margin-top:.5em;font-size:13px;color:#555}summary{cursor:pointer}details code{display:block;font-size:12px;margin-top:.3em;overflow-wrap:anywhere}</style>"
             "<h1>Which opening is worth a closer look?</h1><p>Synthetic data. Deterministic scorer, no API key. Source: "
             f"<code>{html.escape(db_path)}</code> (opened read-only).</p><h2>Search for “engineer”</h2>"
             f"<p>Relate found {hits} title matches. {len(shortlist)} are unseen. Personal fit orders those listings using graph evidence.</p>"
             "<table><thead><tr><th>Unseen listing</th><th>Text score</th><th>Fit</th><th>Status</th></tr></thead>"
-            f"<tbody>{search_rows}</tbody></table><p><a href='#feedback'>Jump to the feedback replay</a></p><h2>All listings</h2>" + "".join(card(x) for x in base)
-            + f"<h2 id='feedback'>Feedback replay: what if I {verdict} {job}?</h2><p>The feedback replay runs on a temporary copy.</p>"
-            + ("".join(card(x, dlt) for x, dlt in moved) or "<p>No scores changed.</p>"))
+            f"<tbody>{search_rows}</tbody></table><p><a href='#all'>Jump to all listings</a></p>"
+            f"<h2 id='feedback'>Feedback replay: what if I {verdict} {job}?</h2><p>Run on a temporary copy of the graph. {len(moved)} of {len(base)} scores changed; the other {len(base) - len(moved)} stayed fixed.</p>"
+            + ("".join(card(x, dlt) for x, dlt in moved) or "<p>No scores changed.</p>")
+            + "<h2 id='all'>All listings</h2>" + "".join(card(x) for x in base))
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True); open(out, "w").write(page)
     for x in base: print(f"{x['score']:>3}  {x['f']['job']}  {x['f']['title']} @ {x['f']['company']}  [{x['f']['status']}]")
     for x, dlt in moved: print(f"replay {verdict} {job}: {x['f']['job']} {dlt:+d} -> {x['score']}")
