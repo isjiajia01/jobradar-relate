@@ -3,10 +3,10 @@
 Explainable job recommendations on a [Relate](https://relatedb.ai) graph.
 Entry for the *Relate by Neo4j Hackathon* (theme: Context, Connected).
 
-Jobradar is a daily LLM job digest I built and run myself (Jobindex, Jobnet, LinkedIn -> filters -> LLM scoring -> email). This repo adds a **Relate memory layer** in front of the LLM scoring step. Everything here uses **synthetic example data only**; the original Jobradar repo is private and nothing from it is included. SQLite stays the store for dedup, status and history in Jobradar; Relate is the relationship memory.
+This is a synthetic prototype inspired by Jobradar, a daily LLM job digest I built and run myself (Jobindex, Jobnet, LinkedIn -> filters -> LLM scoring -> email). This repo adds a **Relate memory layer** in front of the LLM scoring step. Everything here uses **synthetic example data only**; the original Jobradar repo is private and nothing from it is included. SQLite stays the store for dedup, status and history in Jobradar; Relate is the relationship memory.
 
 ## How I use Relate, and why
-Before the LLM scores a job, four graph queries collect facts about it. The LLM (or a deterministic fallback) sees only those facts and returns a score plus one sentence, together with the graph path used. It cannot cite a reason that is not in the graph.
+Before the LLM scores a job, four graph queries collect facts about it. The LLM (or a deterministic fallback) sees only those facts and returns a score plus one sentence, together with the graph path used. LLM replies are validated: only `score` and `explanation` are kept, and any job id or number in the explanation must appear in the graph facts, otherwise the fallback runs. (This is a heuristic check, not a proof of faithfulness.)
 
 Problems this addresses:
 1. LLM scoring was a black box on one JD with no relationships.
@@ -20,7 +20,7 @@ Problems this addresses:
 **Why this mode:** one file per agent/user, easy to back up, submit and inspect. Judges can open the committed file directly (see below). Not `:memory:`, so the data survives and is inspectable.
 
 ## What the graph models
-Nodes: `Job {id,title,url,source,posted_date}`, `Company {name}`, `Skill {name}`, `Location {name}`, `User {id}` (one anonymised profile).
+Nodes: `Job {id,title,url,source,posted_date}`, `Company {name}`, `Skill {name}`, `Location {name}`, `User {id}` (one synthetic profile, `me`).
 
 Edges: `(Job)-[:AT]->(Company)`, `(Company)-[:POSTED]->(Job)`, `(Job)-[:REQUIRES]->(Skill)`, `(Job)-[:IN]->(Location)`, `(Job)-[:SIMILAR_TO {score}]->(Job)`, `(User)-[:LIKED|DISMISSED]->(Job)`, `(Skill)-[:RELATED_TO]->(Skill)`, plus `(User)-[:HAS_SKILL]->(Skill)` (added to compute skill overlap).
 
@@ -49,7 +49,7 @@ make test          # unit tests (temp store, never touches jobradar.rl)
 SQLite: `jobradar_relate/sqlite_adapter.py` reads a `jobs` table (synthetic schema built by `data/make_sample_sqlite.py`) into importer JSON; `make sqlite` demos it.
 The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL`, `LLM_API_KEY`, `LLM_MODEL` (OpenAI-compatible, temperature 0); it receives only the graph facts. The output field `scorer` says which one ran. The LLM path was run once against an OpenAI-compatible gateway (`deepseek-flash`): 2 of 3 jobs were scored by the LLM, 1 timed out and used the fallback, which `scorer` reported correctly.
 
-`graph/seed.cypher` rebuilds the 10-job example graph from scratch; `graph/explain.cypher` is a single-query version of the explanation path.
+`make build OUT=/tmp/x.rl` rebuilds the example graph from `data/sample_jobs.json` + `graph/profile.cypher` into a new file; `graph/explain.cypher` is a standalone query returning the same facts as the scorer.
 
 ## Where the data lives
 `./jobradar.rl` in the repo root (single file, ~48 KB, synthetic data).

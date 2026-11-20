@@ -1,6 +1,6 @@
 """Score a job from graph facts only. LLM is optional (OpenAI-compatible endpoint via env);
 without it a deterministic scorer runs. The LLM output is validated against the facts."""
-import json, os, sys, urllib.request
+import json, os, re, sys, urllib.request
 import relate
 from .facts import gather
 
@@ -24,10 +24,26 @@ def llm(f):
     req = urllib.request.Request(url, json.dumps({"model": model, "temperature": 0,
         "messages": [{"role": "user", "content": msg}]}).encode(),
         {"Authorization": "Bearer " + key, "Content-Type": "application/json"})
-    out = json.load(urllib.request.urlopen(req, timeout=30))["choices"][0]["message"]["content"]
-    r = json.loads(out)
-    assert isinstance(r["score"], int) and 0 <= r["score"] <= 100 and isinstance(r["explanation"], str)
-    return r
+    timeout = int(os.environ.get("LLM_TIMEOUT", "90"))
+    for attempt in (1, 2):
+        try:
+            out = json.load(urllib.request.urlopen(req, timeout=timeout))["choices"][0]["message"]["content"]
+            break
+        except Exception:
+            if attempt == 2: raise
+    return validate(json.loads(out), facts)
+
+def validate(r, facts):
+    """Keep only score+explanation. Reject anything not grounded in the facts."""
+    if not isinstance(r, dict): raise ValueError("not an object")
+    score, why = r.get("score"), r.get("explanation")
+    if not (isinstance(score, int) and not isinstance(score, bool) and 0 <= score <= 100): raise ValueError("bad score")
+    if not (isinstance(why, str) and 0 < len(why) <= 400): raise ValueError("bad explanation")
+    blob = json.dumps(facts)
+    for tok in re.findall(r"\b(?:j\d+|\d+(?:\.\d+)?)\b", why):   # job ids and numbers must exist in the facts
+        if tok not in blob and tok not in {str(len(facts["required"])), str(len(facts["overlap"]))}:
+            raise ValueError(f"ungrounded token in explanation: {tok}")
+    return {"score": score, "explanation": why}
 
 def recommend(db, job_id):
     f = gather(db, job_id)

@@ -1,11 +1,16 @@
 PY := PYTHONPATH=. .venv/bin/python
-.PHONY: venv test import score sqlite
+.PHONY: venv test import build score sqlite
 venv:
 	python3 -m venv .venv && .venv/bin/pip install relate-db
 test:
 	$(PY) -m unittest discover -s tests -v
-import:
+import:  # additive MERGE into ./jobradar.rl, then the synthetic profile layer
 	$(PY) -m jobradar_relate.importer data/sample_jobs.json jobradar.rl
+	relate query --database jobradar.rl < graph/profile.cypher >/dev/null
+build:  # fresh graph in $(OUT), never touches jobradar.rl; usage: make build OUT=/tmp/x.rl
+	test ! -e $(OUT)
+	$(PY) -m jobradar_relate.importer data/sample_jobs.json $(OUT)
+	relate query --database $(OUT) < graph/profile.cypher >/dev/null
 score:
 	$(PY) -m jobradar_relate.score jobradar.rl j02 j06 j09
 sqlite:  # synthetic SQLite -> JSON -> graph

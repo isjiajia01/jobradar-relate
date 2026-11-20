@@ -1,8 +1,12 @@
 [
- {"id":"j01","title":"Data Engineer","company":"Nordlys Analytics","location":"Copenhagen","source":"jobindex","posted_date":"2026-11-10","url":"https://example.invalid/jobs/j01","skills":["Python","SQL","dbt"]},
- {"id":"j02","title":"Data Engineer","company":"Nordlys Analytics","location":"Copenhagen","source":"linkedin","posted_date":"2026-11-11","url":"https://example.invalid/jobs/j02","skills":["Python","SQL","Airflow"]},
- {"id":"j03","title":"Analytics Engineer","company":"Nordlys Analytics","location":"Copenhagen","source":"jobnet","posted_date":"2026-11-12","url":"https://example.invalid/jobs/j03","skills":["SQL","dbt"]},
- {"id":"j04","title":"ML Engineer","company":"Fjord Robotics","location":"Aarhus","source":"jobindex","posted_date":"2026-11-09","url":"https://example.invalid/jobs/j04","skills":["Python","PyTorch","Docker"]},
- {"id":"j05","title":"Backend Developer","company":"Havn Pay","location":"Copenhagen","source":"linkedin","posted_date":"2026-11-13","url":"https://example.invalid/jobs/j05","skills":["Java","SQL","Docker"]},
- {"id":"j06","title":"Backend Developer","company":"Havn Pay","location":"Copenhagen","source":"jobnet","posted_date":"2026-11-13","url":"https://example.invalid/jobs/j06","skills":["Java","SQL","Kubernetes"]}
+ {"id": "j01", "title": "Data Engineer", "company": "Nordlys Analytics", "location": "Copenhagen", "source": "jobindex", "posted_date": "2026-11-10", "url": "https://example.invalid/jobs/j01", "skills": ["Python", "SQL", "dbt"]},
+ {"id": "j02", "title": "Data Engineer", "company": "Nordlys Analytics", "location": "Copenhagen", "source": "linkedin", "posted_date": "2026-11-11", "url": "https://example.invalid/jobs/j02", "skills": ["Python", "SQL", "Airflow"]},
+ {"id": "j03", "title": "Analytics Engineer", "company": "Nordlys Analytics", "location": "Copenhagen", "source": "jobnet", "posted_date": "2026-11-12", "url": "https://example.invalid/jobs/j03", "skills": ["SQL", "dbt"]},
+ {"id": "j04", "title": "ML Engineer", "company": "Fjord Robotics", "location": "Aarhus", "source": "jobindex", "posted_date": "2026-11-09", "url": "https://example.invalid/jobs/j04", "skills": ["Python", "PyTorch", "Docker"]},
+ {"id": "j05", "title": "Backend Developer", "company": "Havn Pay", "location": "Copenhagen", "source": "linkedin", "posted_date": "2026-11-13", "url": "https://example.invalid/jobs/j05", "skills": ["Java", "SQL", "Docker"]},
+ {"id": "j06", "title": "Backend Developer", "company": "Havn Pay", "location": "Copenhagen", "source": "jobnet", "posted_date": "2026-11-13", "url": "https://example.invalid/jobs/j06", "skills": ["Java", "SQL", "Kubernetes"]},
+ {"id": "j07", "title": "Data Scientist", "company": "Kyst Energy", "location": "Odense", "source": "jobindex", "posted_date": "2026-11-08", "url": "https://example.invalid/jobs/j07", "skills": ["Python", "SQL", "Statistics"]},
+ {"id": "j08", "title": "DevOps Engineer", "company": "Fjord Robotics", "location": "Aarhus", "source": "linkedin", "posted_date": "2026-11-14", "url": "https://example.invalid/jobs/j08", "skills": ["Docker", "Kubernetes", "Terraform"]},
+ {"id": "j09", "title": "Python Developer", "company": "Bryggen Labs", "location": "Copenhagen", "source": "jobindex", "posted_date": "2026-11-15", "url": "https://example.invalid/jobs/j09", "skills": ["Python", "Docker", "SQL"]},
+ {"id": "j10", "title": "Data Analyst", "company": "Kyst Energy", "location": "Odense", "source": "jobnet", "posted_date": "2026-11-07", "url": "https://example.invalid/jobs/j10", "skills": ["SQL", "Statistics", "Excel"]}
 ]

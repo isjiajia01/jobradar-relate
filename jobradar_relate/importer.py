@@ -23,14 +23,23 @@ WITH j UNWIND $skills AS s MERGE (k:Skill {name:s}) MERGE (j)-[:REQUIRES]->(k)
 LINK = """MATCH (a:Job {id:$a}),(b:Job {id:$b})
 MERGE (a)-[r:SIMILAR_TO]->(b) SET r.score=$score"""
 
+STORED = """MATCH (j:Job)-[:AT]->(c:Company) OPTIONAL MATCH (j)-[:REQUIRES]->(k:Skill)
+RETURN j.id AS id, j.title AS title, j.source AS source, c.name AS company, collect(k.name) AS skills LIMIT 10000"""
+
 def import_jobs(db, jobs, threshold=0.6):
+    """Upsert jobs, then link each new job to ALL stored jobs (not just this batch).
+    Edges point from the smaller id to the larger id, so re-imports never create reciprocal pairs."""
     for j in jobs:
         db.execute(UPSERT, {**{k: j[k] for k in ("id","title","url","source","posted_date","company","location")}, "skills": j["skills"]})
+    stored = [dict(r.data()) for r in db.execute(STORED)]
+    new_ids = {j["id"] for j in jobs}
     links = 0
-    for i, a in enumerate(jobs):
-        for b in jobs[i+1:]:
+    for i, a in enumerate(stored):
+        for b in stored[i+1:]:
+            if a["id"] not in new_ids and b["id"] not in new_ids: continue
             if a["source"] != b["source"] and (sc := similarity(a, b)) >= threshold:
-                db.execute(LINK, {"a": a["id"], "b": b["id"], "score": sc}); links += 1
+                lo, hi = sorted((a["id"], b["id"]))
+                db.execute(LINK, {"a": lo, "b": hi, "score": sc}); links += 1
     return len(jobs), links
 
 if __name__ == "__main__":
