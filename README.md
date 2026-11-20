@@ -37,7 +37,7 @@ make similar JOB=j06               # optional: toy lexical vector search plus gr
 make scale N=500                   # optional: synthetic scale timings
 ```
 
-Real output (the committed `jobradar.rl` is never modified):
+Real output, abridged (the commands also print the full Before/After evidence lines; the `#` comments are added here; the committed `jobradar.rl` is never modified):
 
 ```text
 $ make replay JOB=j05 VERDICT=LIKED
