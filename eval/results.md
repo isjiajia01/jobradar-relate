@@ -12,3 +12,18 @@ Graph scorer: **6.0/6**. Context-free baseline (skill overlap only): **4.0/6**.
 | j04 > j06 | 70 vs 50 | win | 70 vs 60 | win | j06 resembles a dismissed job; j04 is new |
 
 Caveats: 6 pairs on a 10-job fixture, labelled by the author; this shows the graph signals change rankings in the intended direction, not general ranking quality. The labels follow the same signals the graph scorer uses (dismissals, reposts, related skills), so a graph win is expected by construction; the value is showing a skill-only baseline cannot see them. Controls (first two rows) are expected to be easy for both.
+
+## Repost detection on a separate synthetic feed
+
+A pair counts as one opening when its synthetic requisition IDs agree. The importer never receives those IDs. Each pair has its own store, an earlier seen listing and a later unseen candidate. These stress cases were added after the similarity rule was fixed.
+
+| case | withheld requisitions | prediction | outcome |
+|---|---|---|---|
+| verbatim syndication | R11 / R11 | likely_duplicate | TP |
+| minor skill edit | R12 / R12 | likely_duplicate | TP |
+| board rewrites the title | R13 / R13 | new | FN |
+| two teams advertise identical roles | R14 / R15 | likely_duplicate | FP |
+| same employer, distinct tracks | R16 / R17 | new | TN |
+| shared discipline, distinct openings | R18 / R19 | new | TN |
+
+Correct: **4/6**. TP: 2, TN: 2, FP: 1, FN: 1. This evaluates duplicate identity only. Case frequencies are constructed.

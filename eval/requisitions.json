@@ -1,0 +1,11 @@
+{
+  "description": "Each pair is a separate synthetic two-board feed. The first posting has been seen. Matching hidden requisition IDs mean the second listing covers the same opening. Dates are strictly ordered in all cases.",
+  "cases": [
+    {"case":"verbatim syndication", "first":["R11","Data Engineer",["SQL","Python"]], "later":["R11","Data Engineer",["SQL","Python"]]},
+    {"case":"minor skill edit", "first":["R12","Systems Engineer",["Linux","Go","SQL"]], "later":["R12","Systems Engineer",["Linux","Go","Rust"]]},
+    {"case":"board rewrites the title", "first":["R13","Pipeline Engineer",["SQL","Python"]], "later":["R13","Warehouse Specialist",["SQL","Python"]]},
+    {"case":"two teams advertise identical roles", "first":["R14","Data Engineer",["SQL","Python"]], "later":["R15","Data Engineer",["SQL","Python"]]},
+    {"case":"same employer, distinct tracks", "first":["R16","Platform Engineer",["Go","Linux"]], "later":["R17","Design Researcher",["Interviewing","Prototyping"]]},
+    {"case":"shared discipline, distinct openings", "first":["R18","Risk Analyst",["SQL","Statistics"]], "later":["R19","Operations Analyst",["SQL","Excel"]]}
+  ]
+}

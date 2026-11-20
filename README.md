@@ -40,3 +40,5 @@ The individual scorer optionally calls an OpenAI-compatible endpoint if `LLM_URL
 ## Evaluation and limits
 
 On six author-labelled comparisons, the graph scores **6/6** and skill overlap alone scores **4/6**, counting ties as half. The labels mirror the scorer's signals, making this a regression check. Ten synthetic jobs cannot establish real-world ranking quality. Similarity can miss renamed roles and confuse genuinely separate openings with identical titles. Inspect every pair and both scores in [the generated evaluation](eval/results.md).
+
+A second benchmark uses **six separate two-board feeds**. Its reference labels come from synthetic requisition IDs withheld from the importer. The fixed detector identified **4/6** correctly (two true positives, two true negatives). It missed a renamed opening and incorrectly flagged identical roles on different teams. These deliberately challenging cases measure duplicate identity separately from ranking. The [case definitions](eval/requisitions.json) include the withheld identifiers for audit.
