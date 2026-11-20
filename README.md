@@ -47,7 +47,7 @@ make score         # j02 j06 j09
 make test          # unit tests (temp store, never touches jobradar.rl)
 ```
 SQLite: `jobradar_relate/sqlite_adapter.py` reads a `jobs` table (synthetic schema built by `data/make_sample_sqlite.py`) into importer JSON; `make sqlite` demos it.
-The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL`, `LLM_API_KEY`, `LLM_MODEL` (OpenAI-compatible, temperature 0); it receives only the graph facts. The output field `scorer` says which one ran. (The LLM path is untested so far.)
+The scorer uses a deterministic fallback by default. To use an LLM, set `LLM_URL`, `LLM_API_KEY`, `LLM_MODEL` (OpenAI-compatible, temperature 0); it receives only the graph facts. The output field `scorer` says which one ran. The LLM path was run once against an OpenAI-compatible gateway (`deepseek-flash`): 2 of 3 jobs were scored by the LLM, 1 timed out and used the fallback, which `scorer` reported correctly.
 
 `graph/seed.cypher` rebuilds the 10-job example graph from scratch; `graph/explain.cypher` is a single-query version of the explanation path.
 

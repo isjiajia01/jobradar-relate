@@ -33,8 +33,9 @@ def recommend(db, job_id):
     f = gather(db, job_id)
     try: r = llm(f)
     except Exception as e: print("llm failed, using fallback:", e, file=sys.stderr); r = None
+    used = "llm" if r is not None else "fallback"
     r = r or fallback(f)
-    return {"job": job_id, "title": f["title"], "status": f["status"], **r, "path": f["path"], "scorer": "llm" if r is not None and os.environ.get("LLM_URL") else "fallback"}
+    return {"job": job_id, "title": f["title"], "status": f["status"], **r, "path": f["path"], "scorer": used}
 
 if __name__ == "__main__":
     db = relate.connect(sys.argv[1])
