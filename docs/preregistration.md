@@ -27,3 +27,15 @@ Stage C runs `make real-holdout-eval` once after saving all labels in `data/real
 ## Amendment 1 (2026-11-20, before any label was produced or seen)
 
 The first draw (SHA-256 `ab4cd2bc…`, 8 chunks) was a one-stack sample: 3 of 50 postings contained Python and almost all were `.NET` or `Middle Java Developer` titles, so it could not contain enough LIKED postings to test the scorer. This was judged from titles and keywords only; no labels existed. The Djinni dataset is sorted by title, so 8 contiguous chunks cluster by stack. Replacement rule, applied once: for the held-out draw, read 40 chunks (seed 19, seed-7 offsets excluded), pool all eligible postings, shuffle with the same RNG, then take the first 50 with unique companies and URLs not in the first sample. The scorer, metrics and success rule above are unchanged. The first draw is discarded and never labelled. No further replacement is allowed.
+
+## Result (Stage C, run once, 2026-11-20)
+
+`make real-holdout-eval`, 50 held-out postings labelled by a fresh AI annotator (LIKED 9, NEUTRAL 7, DISMISSED 34; 306 LIKED/DISMISSED pairs):
+
+| Method | AUC | Top-9 expected LIKED hits |
+|---|---|---|
+| New (preference-aware) scorer | 0.8905 | 6.5 |
+| Old scorer | 0.9788 | 6 |
+| Skill-count baseline | 0.9869 | 6.33 |
+
+**Outcome: loss.** The new scorer ranks below both the old scorer and the baseline. Nothing was changed after seeing this. Post-hoc note (not used to change anything): the hard exclusion matched the title word "Management" in "Senior Backend Engineer, Data Management Team" (a LIKED posting), scoring it zero, and the +10-per-skill rule produces many coarse ties. The new scorer is therefore not merged into main.

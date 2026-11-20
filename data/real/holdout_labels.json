@@ -1,0 +1,204 @@
+{
+ "labels": [
+  {
+   "id": "h01",
+   "label": "LIKED"
+  },
+  {
+   "id": "h02",
+   "label": "LIKED"
+  },
+  {
+   "id": "h03",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h04",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h05",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h06",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h07",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h08",
+   "label": "LIKED"
+  },
+  {
+   "id": "h09",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h10",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h11",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h12",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h13",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h14",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h15",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h16",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h17",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h18",
+   "label": "LIKED"
+  },
+  {
+   "id": "h19",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h20",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h21",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h22",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h23",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h24",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h25",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h26",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h27",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h28",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h29",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h30",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h31",
+   "label": "LIKED"
+  },
+  {
+   "id": "h32",
+   "label": "LIKED"
+  },
+  {
+   "id": "h33",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h34",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h35",
+   "label": "LIKED"
+  },
+  {
+   "id": "h36",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h37",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h38",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h39",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h40",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h41",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h42",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h43",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h44",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h45",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h46",
+   "label": "LIKED"
+  },
+  {
+   "id": "h47",
+   "label": "LIKED"
+  },
+  {
+   "id": "h48",
+   "label": "DISMISSED"
+  },
+  {
+   "id": "h49",
+   "label": "NEUTRAL"
+  },
+  {
+   "id": "h50",
+   "label": "DISMISSED"
+  }
+ ]
+}
