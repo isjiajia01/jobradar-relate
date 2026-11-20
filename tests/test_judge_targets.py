@@ -22,6 +22,12 @@ class JudgeTargets(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         return result.stderr
 
+    def test_real_catalog_runs_without_similar_links(self):
+        output = self.run_make("real", "QUERY=developer")
+        self.assertIn("50 real postings", output)
+        self.assertIn("SIMILAR_TO links: 0", output)
+        self.assertRegex(output, r"search 'developer': \d+ title hits")
+
     def test_replay_reports_every_changed_score_and_path(self):
         output = self.run_make("replay", "JOB=j05", "VERDICT=LIKED")
         self.assertEqual(re.findall(r"^j\d+ \d+ -> \d+$", output, re.M), ["j05 45 -> 80", "j06 50 -> 75"])

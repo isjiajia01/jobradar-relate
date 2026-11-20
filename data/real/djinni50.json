@@ -1,0 +1,888 @@
+[
+ {
+  "id": "d01",
+  "title": "Big Data Developer",
+  "company": "TPE, Odessa - The Product Engine",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-04-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#1350f110-16bd-5558-b465-241cd76f379e",
+  "skills": [
+   "Java",
+   "Scala",
+   "Redis",
+   "Kafka",
+   "Spark",
+   "AWS",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d02",
+  "title": "Big Data Developer",
+  "company": "EPAM",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#925243e6-aed0-536e-95f0-fd0b15dd772e",
+  "skills": [
+   "Python",
+   "Scala",
+   "SQL",
+   "Spark",
+   "Airflow",
+   "Docker",
+   "Kubernetes",
+   "Terraform"
+  ]
+ },
+ {
+  "id": "d03",
+  "title": "Big Data Developer",
+  "company": "Grid Dynamics",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-03-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ede255ed-f09e-51e9-a1ee-ab7523c6d971",
+  "skills": [
+   "Scala",
+   "Kafka",
+   "Spark",
+   "REST"
+  ]
+ },
+ {
+  "id": "d04",
+  "title": "Big Data Developer",
+  "company": "EPAM Systems",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#a34e05dc-844b-547f-8ea4-6450dce8dac5",
+  "skills": [
+   "Python",
+   "SQL",
+   "Airflow",
+   "AWS",
+   "Snowflake"
+  ]
+ },
+ {
+  "id": "d05",
+  "title": "Big Data Developer",
+  "company": "Luxoft",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-05-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#7a88f16f-2ec3-5d4e-b05f-f7b13a10d222",
+  "skills": [
+   "Java",
+   "Scala",
+   "Kafka",
+   "Spark",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d06",
+  "title": "Big Data Developer",
+  "company": "QIT Software",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-11-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#f07dc7f2-3b18-506c-8c02-a70d841491f0",
+  "skills": [
+   "Python",
+   "Redis",
+   "Spark",
+   "Airflow",
+   "Docker",
+   "Pandas",
+   "TensorFlow",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d07",
+  "title": "Big Data Developer",
+  "company": "Adaptiq",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-02-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#dd45d3c9-7c2b-5916-b977-d47dc51d919b",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "Kafka",
+   "Spark",
+   "Docker",
+   "AWS"
+  ]
+ },
+ {
+  "id": "d08",
+  "title": "Big Data Developer",
+  "company": "ITernal Group",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-02-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#564afd98-4ec7-548c-96d1-b55d8af25c00",
+  "skills": [
+   "Python",
+   "Java",
+   "Kafka",
+   "Spark",
+   "TensorFlow"
+  ]
+ },
+ {
+  "id": "d09",
+  "title": "Big Data Developer",
+  "company": "Exadel",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#d8509995-e83f-519a-a14a-66f0d3e9401d",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d10",
+  "title": "Big Data Developer",
+  "company": "CiGen",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-03-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#38a18098-9f10-596f-99eb-09315721f44f",
+  "skills": [
+   "Python",
+   "Scala",
+   "C++",
+   "SQL",
+   "MongoDB",
+   "Spark",
+   "Azure",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d11",
+  "title": "Big Data Developer",
+  "company": "G5 Entertainment",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#5bdd0628-dcbf-59b5-bfad-9b4baab9f2da",
+  "skills": [
+   "Java",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Git",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d12",
+  "title": "BigData Developer",
+  "company": "GlobalLogic",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#b8f53373-9afe-5e17-af97-666d10697a95",
+  "skills": [
+   "Scala",
+   "SQL",
+   "Spark",
+   "Kubernetes",
+   "Azure"
+  ]
+ },
+ {
+  "id": "d13",
+  "title": "BigData Developer",
+  "company": "Guerilla Suit",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#8df3853b-2b0f-57fb-8cd2-c3566711f371",
+  "skills": [
+   "Python",
+   "Java",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d14",
+  "title": "Big Data Developer (Digital Marketing sphere)",
+  "company": "Coherent Solutions",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-12-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#d2e9f3b6-6919-57a2-a5a9-55a7eccbbf61",
+  "skills": [
+   "Java",
+   "Spark"
+  ]
+ },
+ {
+  "id": "d15",
+  "title": "Big Data Developer for AgileLab",
+  "company": "Daxx",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#04110d0c-5f51-587c-ade8-9cb3a03e3001",
+  "skills": [
+   "Java",
+   "Scala",
+   "Spark",
+   "Docker",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d16",
+  "title": "Big Data Developer (Junior)",
+  "company": "Helix Global LLC",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-02-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#e4dbde47-0456-59d2-b8f7-7e603206dce8",
+  "skills": [
+   "Python",
+   "JavaScript",
+   "SQL",
+   "MongoDB",
+   "Azure",
+   "Pandas",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d17",
+  "title": "BigData Developer, Media Conglomerate",
+  "company": "DataArt",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#af490b68-6d5a-5fd0-b9b8-939568905195",
+  "skills": [
+   "Python",
+   "Java",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d18",
+  "title": "Big data engineer",
+  "company": "Data Science UA",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-12-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ce059c28-3838-5309-8542-41783f30b561",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "Go",
+   "Kafka",
+   "Spark",
+   "Kubernetes"
+  ]
+ },
+ {
+  "id": "d19",
+  "title": "Big data engineer",
+  "company": "Storypoint",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#9d40cd45-b0f8-500a-8119-a9f2b0260d45",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "Go",
+   "Kafka",
+   "Spark",
+   "Kubernetes"
+  ]
+ },
+ {
+  "id": "d20",
+  "title": "Big data Engineer",
+  "company": "EPAM Ukraine Lviv",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#a3b4ee5c-917f-5f3a-827c-bbace24555f5",
+  "skills": [
+   "Java",
+   "Scala",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "AWS",
+   "Linux"
+  ]
+ },
+ {
+  "id": "d21",
+  "title": "Big Data engineer",
+  "company": "IT-Rex",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-02-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6756f57a-aef9-5740-a574-f0443b16e1cf",
+  "skills": [
+   "Java",
+   "Scala",
+   "SQL",
+   "Spark",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d22",
+  "title": "Big Data engineer",
+  "company": "TechHunt",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ab9f1603-39ac-54a6-b1c4-0138c6ed0ce1",
+  "skills": [
+   "SQL",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d23",
+  "title": "Big Data engineer",
+  "company": "MageticAI",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6dcb8f18-a29e-5506-81fb-57fac7d3eb85",
+  "skills": [
+   "Python",
+   "SQL",
+   "Spark",
+   "Django",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d24",
+  "title": "Big Data Engineer",
+  "company": "CloudMade",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#cb397f83-fb48-532a-bf1f-411d54ae8f7f",
+  "skills": [
+   "Python",
+   "Java",
+   "Spark",
+   "Kubernetes",
+   "AWS",
+   "REST",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d25",
+  "title": "Big Data Engineer",
+  "company": "Kyivstar",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-09-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#b3c864a4-ab10-52bc-afc5-77c1af7458cb",
+  "skills": [
+   "Python",
+   "Scala",
+   "SQL",
+   "Spark",
+   "Docker",
+   "Azure",
+   "Pandas",
+   "Git",
+   "Linux",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d26",
+  "title": "Big Data Engineer",
+  "company": "Clicca.agency",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#c71743dc-567b-568d-b376-c0f34f0df364",
+  "skills": [
+   "Python",
+   "Java",
+   "Ruby",
+   "C++",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "Docker",
+   "AWS",
+   "React",
+   "Snowflake",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d27",
+  "title": "Big Data Engineer",
+  "company": "Epam",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-04-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ccd59c75-2d60-5fb0-ab3f-cdecf077b101",
+  "skills": [
+   "Python",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "AWS",
+   "Linux"
+  ]
+ },
+ {
+  "id": "d28",
+  "title": "Big Data Engineer",
+  "company": "N-iX",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#26e6fd37-f536-54c4-ae5b-eaf68d6fdc5f",
+  "skills": [
+   "Python",
+   "Scala",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Linux",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d29",
+  "title": "Big Data Engineer",
+  "company": "Trinetix",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-01-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#36680c29-a78d-5988-8045-9780559fe772",
+  "skills": [
+   "Python",
+   "SQL",
+   "Spark",
+   "AWS",
+   "Azure",
+   "GCP"
+  ]
+ },
+ {
+  "id": "d30",
+  "title": "Big Data Engineer",
+  "company": "Halian International",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-12-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#ce4e5e19-16ef-51c7-ae3f-00417bd2e5b7",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "SQL",
+   "MySQL",
+   "Kafka",
+   "Spark",
+   "Kubernetes",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d31",
+  "title": "Big Data Engineer",
+  "company": "Toughbyte",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-12-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#1d9737fe-363c-5905-b078-10d7655f1c59",
+  "skills": [
+   "Python",
+   "Spark",
+   "AWS"
+  ]
+ },
+ {
+  "id": "d32",
+  "title": "Big Data Engineer",
+  "company": "Ciklum",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#46f07795-b68a-5e4e-b0d2-1d0d56a0609b",
+  "skills": [
+   "Python",
+   "Scala",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "Azure",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d33",
+  "title": "Big Data Engineer",
+  "company": "Diatom Enterprises",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-11-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#c69151d5-7899-5b43-9f18-e5d6aaf6ad4e",
+  "skills": [
+   "Python",
+   "Java",
+   "JavaScript",
+   "SQL",
+   "Git",
+   "Linux"
+  ]
+ },
+ {
+  "id": "d34",
+  "title": "Big Data Engineer",
+  "company": "NCube",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-04-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#c6e6e942-750d-5c2e-a70d-6b2a01ce58af",
+  "skills": [
+   "Python",
+   "Scala",
+   "Ruby",
+   "SQL",
+   "MySQL",
+   "Kafka",
+   "Spark",
+   "AWS",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d35",
+  "title": "Big Data Engineer",
+  "company": "Sloboda Studio",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#4c3beb56-7b09-5b65-99ae-75ccae03dfb3",
+  "skills": [
+   "Python",
+   "Java",
+   "Kafka",
+   "Airflow",
+   "Docker",
+   "Kubernetes",
+   "GCP",
+   "Linux"
+  ]
+ },
+ {
+  "id": "d36",
+  "title": "Big Data Engineer",
+  "company": "Intersog",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#0dae9522-7a5d-5888-8821-3ca2b3f03b23",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "SQL",
+   "Spark",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d37",
+  "title": "Big Data Engineer",
+  "company": "inVerita",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#f80ea220-bf44-52e9-8641-e2e60bf522a9",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "SQL",
+   "Spark",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d38",
+  "title": "Big Data Engineer",
+  "company": "King's Choice",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#427a2e25-01f0-5ab4-954d-2227675562b1",
+  "skills": [
+   "Java",
+   "Scala",
+   "MongoDB",
+   "Spark"
+  ]
+ },
+ {
+  "id": "d39",
+  "title": "Big Data Engineer",
+  "company": "SQRD.tech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-09-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#cc62b799-fb38-5aa5-833b-12db8a53af5a",
+  "skills": [
+   "Python",
+   "Java",
+   "Scala",
+   "Kafka",
+   "Spark",
+   "Airflow",
+   "Kubernetes",
+   "GCP",
+   "TensorFlow",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d40",
+  "title": "Big Data Engineer",
+  "company": "NIX Solutions Ltd.",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-01-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#cad4dd8d-7a19-588d-8ccb-9c1546fba5b7",
+  "skills": [
+   "Python",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "Airflow",
+   "Docker",
+   "Kubernetes",
+   "AWS",
+   "GCP",
+   "Snowflake",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d41",
+  "title": "Big Data Engineer",
+  "company": "MGID",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-05-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#c267b4bc-679e-5282-9155-2488d43afdb2",
+  "skills": [
+   "Python",
+   "SQL",
+   "MongoDB",
+   "Kafka",
+   "Spark",
+   "Docker",
+   "Kubernetes",
+   "Linux",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d42",
+  "title": "Big Data Engineer",
+  "company": "PSR Company",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-10-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#5160b6c5-1142-55e4-874e-2cc24191367c",
+  "skills": [
+   "Python",
+   "Scala",
+   "Kafka",
+   "Spark",
+   "Airflow",
+   "AWS"
+  ]
+ },
+ {
+  "id": "d43",
+  "title": "Big Data Engineer",
+  "company": "GR8 Tech",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2023-02-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#33988827-5dad-5edf-bec5-30a8b8bc373b",
+  "skills": [
+   "Python",
+   "SQL",
+   "PostgreSQL",
+   "MongoDB",
+   "Redis",
+   "Kafka",
+   "Airflow",
+   "Docker",
+   "Kubernetes",
+   "AWS",
+   "GCP",
+   "Terraform",
+   "Linux",
+   "REST"
+  ]
+ },
+ {
+  "id": "d44",
+  "title": "Big Data Engineer",
+  "company": "United Software",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#3136981b-27d0-590f-8df5-88c740c4d484",
+  "skills": [
+   "Python",
+   "Scala",
+   "C#",
+   ".NET",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "AWS",
+   "Azure",
+   "Hadoop"
+  ]
+ },
+ {
+  "id": "d45",
+  "title": "Big Data Engineer",
+  "company": "KitRUM",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#66dd37aa-8a13-5f55-b8de-0359eb8dbc8a",
+  "skills": [
+   "Java",
+   "Scala",
+   "SQL",
+   "Kafka",
+   "Spark",
+   "Docker",
+   "AWS",
+   "Terraform",
+   "Git",
+   "Hadoop",
+   "Machine Learning"
+  ]
+ },
+ {
+  "id": "d46",
+  "title": "Big Data Engineer",
+  "company": "GreenM",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-08-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#6aedebe6-be4c-557a-989d-831f4712dbc9",
+  "skills": [
+   "MongoDB",
+   "Kafka",
+   "Spark",
+   "Airflow"
+  ]
+ },
+ {
+  "id": "d47",
+  "title": "Chief Software Architect",
+  "company": "GLOBRECS | Global Recruitment Solutions",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-12-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#78592ee5-ef7a-5bc0-82a8-cdfa996b8ff9",
+  "skills": [
+   ".NET",
+   "AWS"
+  ]
+ },
+ {
+  "id": "d48",
+  "title": "Chief Solution Architect",
+  "company": "Oxagile",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2021-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#858ba8d9-5be7-58e3-91ec-a69ccb735ddd",
+  "skills": [
+   "Java",
+   ".NET"
+  ]
+ },
+ {
+  "id": "d49",
+  "title": "Chief technical officer",
+  "company": "F3NIX",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2020-07-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#3c5cb5fe-5de0-503a-bf20-37f04685422e",
+  "skills": [
+   "MySQL",
+   "MongoDB",
+   "Docker",
+   "Kubernetes",
+   "Terraform",
+   "Linux"
+  ]
+ },
+ {
+  "id": "d50",
+  "title": "Chief Technical Officer",
+  "company": "Solidgate",
+  "location": "Remote",
+  "source": "djinni",
+  "posted_date": "2022-06-01",
+  "url": "https://huggingface.co/datasets/lang-uk/recruitment-dataset-job-descriptions-english#836a137f-787d-54fd-aeab-f29cbedcfab0",
+  "skills": [
+   "Java",
+   "Go"
+  ]
+ }
+]
